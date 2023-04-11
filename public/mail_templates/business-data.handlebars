@@ -1,0 +1,59 @@
+<div style="color:#343a40">
+    <table>
+        <div style="width: 100%;">
+            <tr>
+                <div style="margin-left: 10%;">
+                    <td>Payment Status</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Payment Method</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Type</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Products Name</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Products Price</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Total</td>
+                </div>
+                <div style="margin-left: 50px;">
+                    <td>Time</td>
+                </div>
+            </tr>
+        </div>
+        {{#each data}}
+        <div style="width: 100%;">
+            <tr>
+                <div>
+                    <td>{{this.paymentStatus}}</td>
+                </div>
+                <div>
+                    <td>{{this.paymentMethod}}</td>
+                </div>
+                <div>
+                    <td>{{this.type}}</td>
+                </div>
+                <div>
+                    <td>{{this.product.name}}</td>
+                </div>
+                <div>
+                    <td>{{this.product.price}}</td>
+                </div>
+                <div>
+                    <td>{{this.total}}</td>
+                </div>
+                <div>
+                    <td>{{this.paymentTime}}</td>
+                </div>
+            </tr>
+        </div>
+        {{/each}}
+    </table>
+    <br>
+
+    {{> footer}}
+</div>

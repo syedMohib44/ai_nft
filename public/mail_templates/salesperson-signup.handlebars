@@ -1,0 +1,38 @@
+Hello {{name}},<br><br>
+Welcome to Inzilo – Infinite Possibilities. <br><br>
+
+Thanks for choosing the greatest system to run your business. Please click on the link below to activate your
+account.<br><br>
+URL: <a href={{encodedUrl}}> {{url}} </a> <br>
+Email: {{email}}<br>
+Password: {{password}}
+<br>
+<br>
+
+Promo Code for Sales<br>
+<table style="border-collapse:collapse;width:100%;">
+    <tbody>
+        {{#each normalPromocodes}}
+        <tr>
+            <td style="padding: 8px 0px;color: #bd038e; font-weight: bold">{{this.code}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+
+Promo Code for 2 Weeks for $1 <br>
+<table style="border-collapse:collapse;width:100%;">
+    <tbody>
+        {{#each trialPromocodes}}
+        <tr>
+            <td style="padding: 8px 0px;color: #2da160; font-weight: bold">{{this.code}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+
+{{> footer}}
