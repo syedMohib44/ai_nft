@@ -9,12 +9,8 @@ import { config } from '../../config';
 import { JWTPAYLOAD } from '../../interface/JWTPayload';
 import moment from 'moment';
 import SuperAdmin from '../../entity/SuperAdmin';
-import { businessRoutes } from './business.route';
 
 const router = Router();
-
-
-router.use('/business', businessRoutes);
 
 
 router.post('/signup', async (req, res, next) => {

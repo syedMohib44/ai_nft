@@ -6,10 +6,8 @@ import Users, { IUsers } from '../../entity/Users';
 import { AddAcceptorDto } from '../../dto/auth/addAcceptorDto';
 import { APIError } from '../../utils/error';
 import { config } from '../../config';
-import Business from '../../entity/Businesses';
 import { generateRandomString } from '../../utils/commonHelper';
 import { sendMail } from '../../libs/mail/mail';
-import Businesses from '../../entity/Businesses';
 import { FileOperation } from '../../libs/fileOperation';
 
 export const insertUserAsAcceptor = async (addAcceptorDto: AddAcceptorDto) => {
@@ -74,8 +72,6 @@ export const ownerSchema = {
         .required(),
     username: Joi.string()
         .email()
-        .required(),
-    businessName: Joi.string()
         .required(),
     profilePic: Joi.object()
         .optional()

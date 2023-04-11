@@ -1,8 +1,5 @@
-import { AddNFTsDto } from "../../dto/withdraw-zakat/AddNFTsDto";
-import { AddZakatRequestDto } from "../../dto/zakat-request/addAcceptorDto";
-import NFTs from "../../entity/NFTs";
-import ZakatRequests, { IZakatRequests } from "../../entity/ZakatRequests";
-import { FileOperation } from "../../libs/fileOperation";
+import { AddNFTsDto } from "../../dto/nfts/addNFTsDto";
+import NFTs, { INFTs } from "../../entity/NFTs";
 import { APIError } from "../../utils/error";
 
 export const insertNFTs_Matic = async (addNFTsDto: AddNFTsDto) => {
@@ -11,7 +8,7 @@ export const insertNFTs_Matic = async (addNFTsDto: AddNFTsDto) => {
 
     //TODO: Need to put web3(onchain) validation here 
 
-    const nft = new NFTs();
+    const nft: INFTs = new NFTs();
     nft.user = addNFTsDto.user;
     nft.amount = addNFTsDto.amount;
     nft.currencyType = "MATIC";
@@ -24,9 +21,9 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
 
     //TODO: Need to put web3(onchain) validation here 
 
-    const nft = new NFTs();
+    const nft: INFTs = new NFTs();
     nft.user = addNFTsDto.user;
     nft.amount = addNFTsDto.amount;
-    nft.currencyType = "ZKT";
+    nft.currencyType = "ETH";
     await nft.save();
 }

@@ -1,6 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
-import { IBusinesses } from './Businesses';
 
 export const typeOfUsers = ['doner', 'acceptor', 'admin', 'superadmin'] as const;
 export type typeOfUser = typeof typeOfUsers[number];
