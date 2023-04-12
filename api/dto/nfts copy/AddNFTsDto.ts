@@ -8,7 +8,5 @@ export interface AddNFTsDto {
      * You wish is AI command
      */
     wish: string;
-    txId: string;
-    tokenId: number;
     amount: number;
 }

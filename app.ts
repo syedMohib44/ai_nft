@@ -1,4 +1,4 @@
-// // import fs from "fs";
+// import fs from "fs";
 // import { HfInference } from "@huggingface/inference";
 // // import { create } from 'ipfs-http-client'
 
@@ -20,7 +20,7 @@
 // //     }
 // // }
 
-// const fs = require('fs')
+// // const fs = require('fs')
 
 // const run = async () => {
 //     // const files = fs.readdirSync(img.png)
@@ -39,7 +39,7 @@
 //     const inference = new HfInference('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');
 //     console.log('running');
 //     const blob = await inference.textToImage({
-//         inputs: 'Punk electronic style Venom dude with OG style',
+//         inputs: 'Batman',
 //         negative_prompt: '18+',
 //         model: 'stabilityai/stable-diffusion-2',
 //     }, { use_gpu: true, use_cache: false });
@@ -47,6 +47,16 @@
 //     const arrayBuffer = await blob.arrayBuffer();
 //     const buffer = Buffer.from(arrayBuffer);
 //     fs.writeFileSync('img.png', buffer);
+//     // const readImg = fs.readFileSync('img.png')
+//     // console.log(readImg)
+
+//     // const utf = await blob.stream().getReader().read();
+//     // console.log(utf, blob);
+
+//     // const d = await inference.imageSegmentation({ data: readImg, model: 'stabilityai/stable-diffusion-2' }, { use_gpu: true });
+//     // console.log(d);
+//     // const dd = await inference.imageSegmentation({ data: blob, model: 'stabilityai/stable-diffusion-2' });
+//     // console.log(dd);
 //     console.log('Ran successfully');
 // }
 // run();
@@ -61,6 +71,7 @@ server.on('listening', () => {
     mongoose.set('debug', IS_DEV_MODE);
     mongoose.connect(MONGO_URI, {
         autoIndex: IS_DEV_MODE
+        
     });
     mongoose.connection.once('open', () => {
         console.info('Connected to Mongo via Mongoose');
@@ -68,4 +79,4 @@ server.on('listening', () => {
     mongoose.connection.on('error', (err) => {
         console.error('Unable to connect to Mongo via Mongoose', err);
     });
-})
+});

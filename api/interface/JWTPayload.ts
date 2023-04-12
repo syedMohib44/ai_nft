@@ -3,6 +3,6 @@ export interface JWTPAYLOAD {
     address: string;
     username: string;
     profilePic?: string;
-    typeOfUser: 'doner' | 'acceptor' | 'admin' | 'superadmin';
+    typeOfUser: 'admin' | 'user';
     token?: string;
 }

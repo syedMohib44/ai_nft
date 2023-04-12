@@ -3,18 +3,24 @@ import { IGetOptionsWithPaginate } from "../../interface/IGetOptions";
 import { APIError } from "../../utils/error";
 import NFTs from "../../entity/NFTs";
 
-interface FindNFT_OptionPaginate extends IGetOptionsWithPaginate {
+export interface FindNFT_OptionPaginate extends IGetOptionsWithPaginate {
     userId?: IUsers['_id'];
+    address?: string;
+    //https://gitlab.com/supergized/salonrestapiexpressmongo/-/blob/master/api/services/business-service/showBusiness.service.ts
+    populate?: { path: 'generatedarts.user', select: 'firstName lastName isActive' },
+    lean?: true
 }
 
 
 export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
     const query = {
-        populate: 'users',
-        select: 'firstName lastName isActive doner profilePic'
+        populate: 'generatedarts',
+        select: 'user'
     };
     if (options.userId)
-        Object.assign(query, { product: options.userId });
+        Object.assign(query, { user: options.userId });
+    if (options.address)
+        Object.assign(query, { address: options.address });
 
     if (options.q) {
         const usersCount = await NFTs.countDocuments({ $text: { $search: options.q } });
@@ -36,12 +42,12 @@ export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
         }
     }
 
-    const withdrawZakats = await NFTs.paginate(query, options);
-    return withdrawZakats;
+    const nfts = await NFTs.paginate(query, options);
+    return nfts;
 }
 
 export const findAllNFT_ById = async (_id: number) => {
-    const nfts = await NFTs.findOne({ _id }).populate({ path: 'users', select: 'firstName lastName isActive doner profilePic' })
+    const nfts = await NFTs.findOne({ _id }).populate({ path: 'generatedArts', select: 'firstName lastName isActive ' })
     if (!nfts)
         throw new APIError(404, { message: "Zakat cannot be found" });
     return nfts;

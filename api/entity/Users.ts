@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
-export const typeOfUsers = ['doner', 'acceptor', 'admin', 'superadmin'] as const;
+export const typeOfUsers = ['admin', 'user'] as const;
 export type typeOfUser = typeof typeOfUsers[number];
 
 export interface IUsers extends Document {
@@ -13,7 +13,6 @@ export interface IUsers extends Document {
     isActive: boolean;
     typeOfUser: typeOfUser;
     phone: string;
-    doner: boolean;
     refreshToken: string;
     lastLogin: string;
     profilePic?: string;
@@ -43,6 +42,14 @@ UserSchema.methods.gravatar = function (size: number = 200) {
         return `https://gravatar.com/avatar/?s=${size}&d=retro`;
     }
 }
+
+// UserSchema.methods.gravatar = function (size: number = 200) {
+//     if (!this.email) {
+//         return `https://gravatar.com/avatar/?s=${size}&d=retro`;
+//     }
+//     const md5 = crypto.createHash('md5').update(this.email).digest('hex');
+//     return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
+// };
 
 UserSchema.virtual('fullName').get(function (this: any) {
     return `${this.firstName} ${this.lastName}`;

@@ -22,7 +22,7 @@ export const isSuperadmin = (req: Request, res: Response, next: NextFunction) =>
     }
 
     const payload = req.user as JWTPAYLOAD;
-    if (payload.typeOfUser === 'superadmin') {
+    if (payload.typeOfUser === 'admin') {
         return next();
     }
     res.sendStatus(401);
@@ -34,25 +34,13 @@ const isPathAllowed = (url: string) => {
 };
 
 
-export const isDoner = (req: Request, res: Response, next: NextFunction) => {
+export const isUser = (req: Request, res: Response, next: NextFunction) => {
     if (isPathAllowed(req.originalUrl)) {
         return next();
     }
 
     const payload = req.user as JWTPAYLOAD;
-    if (payload.typeOfUser === 'doner') {
-        return next();
-    }
-    res.sendStatus(401);
-};
-
-export const isAccpetor = (req: Request, res: Response, next: NextFunction) => {
-    if (isPathAllowed(req.originalUrl)) {
-        return next();
-    }
-
-    const payload = req.user as JWTPAYLOAD;
-    if (payload.typeOfUser === 'acceptor') {
+    if (payload.typeOfUser === 'user') {
         return next();
     }
     res.sendStatus(401);

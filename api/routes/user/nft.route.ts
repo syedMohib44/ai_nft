@@ -1,9 +1,13 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { getNFTs } from '../../controllers/nft.controller';
 import { userRequestHandler } from '../../middlewares/userRequestHandler';
 import { storage } from '../../utils/commonHelper';
 
 const router = Router();
+
+router.get('/', userRequestHandler(getNFTs));
+router.get('/', userRequestHandler(getNFTs));
 
 // router.get('/', getProducts);
 // router.post('/', multer({
@@ -16,5 +20,5 @@ const router = Router();
 // router.get('/:id', userRequestHandler(getProductById));
 
 export {
-    router as productRoutes
+    router as nftRoutes
 }

@@ -58,7 +58,7 @@ router.post('/login', async (req, res, next) => {
 
         const payload: Pick<JWTPAYLOAD, 'userId' | 'typeOfUser'> = {
             userId: superadmin._id,
-            typeOfUser: 'superadmin',
+            typeOfUser: 'admin',
         };
         const token = jwt.sign(payload, config.jwt_secret, { expiresIn: config.jwt_life });
         const refreshToken = jwt.sign(payload, config.refresh_jwt_secret, { expiresIn: config.refresh_jwt_life })

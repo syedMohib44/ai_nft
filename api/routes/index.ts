@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { auth, superadminAuth, isSuperadmin, isDoner, isAccpetor } from '../middlewares/auth';
+import { auth, superadminAuth, isSuperadmin } from '../middlewares/auth';
 import { userRequestHandler } from '../middlewares/userRequestHandler';
 import multer from 'multer';
 import { authRoutes } from './authRoutes';
@@ -10,9 +10,9 @@ import { superadminRoutes } from './superadmin';
 const router = Router();
 
 router.use('/superadmin', superadminAuth(), isSuperadmin, superadminRoutes);
-// router.use('/doner', auth(), isDoner, donerRoutes);
 
 router.use('/auth', authRoutes);
+// router.use('/nft', nft);
 router.use('/user', auth(), userRoutes);
 
 export {
