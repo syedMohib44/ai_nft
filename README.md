@@ -1,37 +1,29 @@
-# Getting Started
-
+# GETTING STARTED
 - Clone the project in your local repository
 - Open CLI or Git Bash and navigate to the project folder 
 - Run command "npm install"
 - Navigate to client folder by using command "cd client"
 - Run command "npm install"
 
-# Runnign Project
-
-- Open two CLI or Git Bash, one in the project folder "Deception Aura" another one in "client" inside "Deception Aura" directory.
-- Run "npm start" in both the terminals.
-- Server will start at port 28017 and Client will start at prot 3001
-
-# Additional
-
-- Runs the app in the development mode.\
-- Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
-- The page will reload if you make edits.\
-- You will also see any lint errors in the console.
+# RUN PROJECT
+- Open two CLI or Git Bash, one in the project folder `ai-nft`.
+- Run `npm start` in the terminals.
+- Server will start at port `3000`
 
 
-### `npm run build`
+# BUILD PROJECT
+- Run `npm run build` to build the project it will create dist folder which have all the build files.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## TODO
 - <del>Registration<del>
 - <del>Simple Login<del>
 - Login Authentiation using Google
-- Integrate check from contract using web3(After contract deployment)
+- Integrate web3 calls and checks from contract side(After contract deployment)
+
+# POSTMAN INVITATION
+- Please join Postman workspace below for api testing and structure for api call.
+- https://app.getpostman.com/join-team?invite_code=d41c013752e5d7b7057bdc38eec208d9&ws=4e5517e6-424c-4423-b7f1-0bb99ae0bae5
+
+# README ANNOTATION
+- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
