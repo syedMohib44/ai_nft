@@ -26,7 +26,7 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true },
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true, minlength: 8, maxlength: 255 },
-    refreshToken: { type: String, required: true },
+    refreshToken: { type: String, required: false },
     isActive: { type: Boolean, required: true, default: false },
     typeOfUser: { type: String, enum: typeOfUsers, required: true, trim: true },
     doner: { type: Boolean, require: true, default: false },

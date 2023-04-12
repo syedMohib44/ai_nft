@@ -3,43 +3,42 @@ import Joi from '@hapi/joi';
 import moment from 'moment';
 import { validate } from '../../libs/validator/validate';
 import Users, { IUsers } from '../../entity/Users';
-import { AddDonerDto } from '../../dto/auth/addDonerDto';
+import { AddUserDto } from '../../dto/auth/addUserDto';
 import { APIError } from '../../utils/error';
 import { config } from '../../config';
 import { generateRandomString } from '../../utils/commonHelper';
 import { sendMail } from '../../libs/mail/mail';
 import { FileOperation } from '../../libs/fileOperation';
 
-export const insertUserAsDoner = async (addDonerDto: AddDonerDto) => {
-    await donerSignupValidation(addDonerDto);
+export const insertUser = async (addUserDto: AddUserDto) => {
+    await UserSignupValidation(addUserDto);
 
     // save user
     // const tempPassword = generateRandomString(8);
-    if (addDonerDto.password !== addDonerDto.confirmPassword)
+    if (addUserDto.password !== addUserDto.confirmPassword)
         throw new APIError(400, { 'message': "Password does not match" });
 
     //if (config.mode === 'dev') {
     //     console.log('Password is', tempPassword);
     // }
-    const hashedPassword = await bcrypt.hash(addDonerDto.password, bcrypt.genSaltSync(10));
+    const hashedPassword = await bcrypt.hash(addUserDto.password, bcrypt.genSaltSync(10));
     const user = new Users();
-    user.firstName = addDonerDto.firstName;
-    user.address = addDonerDto.address;
-    user.lastName = addDonerDto.lastName;
-    user.username = addDonerDto.username;
+    user.address = addUserDto.address;
+    user.firstName = addUserDto.firstName;
+    user.lastName = addUserDto.lastName;
+    user.username = addUserDto.username;
     user.isActive = true;
-    if (addDonerDto.profilePic) {
+    if (addUserDto.profilePic) {
         const fileOP = new FileOperation();
-        const image = fileOP.fastUploadFile(addDonerDto.profilePic);
+        const image = fileOP.fastUploadFile(addUserDto.profilePic);
         user.profilePic = image;
     }
 
     user.password = hashedPassword;
-    user.typeOfUser = 'doner';
-    user.doner = true;
+    user.typeOfUser = 'user';
     const savedUser = await user.save();
 
-    sendSuccessSignupMail(user);
+    // sendSuccessSignupMail(user);
 
     return { user: savedUser };
 };
@@ -73,11 +72,17 @@ export const ownerSchema = {
     username: Joi.string()
         .email()
         .required(),
+    password: Joi.string()
+        .required(),
+    confirmPassword: Joi.string()
+        .required(),
+    address: Joi.string()
+        .required(),
     profilePic: Joi.object()
         .optional()
 };
 
-export const donerSignupValidation = async (value: AddDonerDto) => {
+export const UserSignupValidation = async (value: AddUserDto) => {
     const schema = Joi.object(ownerSchema);
 
     const { error } = validate(schema, value);

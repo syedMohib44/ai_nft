@@ -62,6 +62,7 @@
     "prettier": "^2.4.1",
     "rm": "^0.1.8",
     "sequelize": "^6.6.5",
+    "ssh2-sftp-client": "^9.0.4",
     "supertest": "^6.1.4",
     "ts-node-dev": "^1.1.8",
     "web3": "^1.8.0"
