@@ -10,12 +10,3 @@ export const ownerRegister = async (req: Request, res: Response, next: NextFunct
         next(err);
     }
 };
-
-// export const activateAccount = async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//         await ActivateUser(req.params.username);
-//         res.status(200).send('Account has been re-activated successfully');
-//     } catch (err) {
-//         next(err);
-//     }
-// };
