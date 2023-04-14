@@ -4,6 +4,13 @@ import paginate from 'mongoose-paginate-v2';
 export const typeOfUsers = ['admin', 'user'] as const;
 export type typeOfUser = typeof typeOfUsers[number];
 
+const oAuthKinds = ['google', 'ai-nft'] as const;
+export interface AuthToken {
+    accessToken?: string;
+    refreshToken: string;
+    kind: typeof oAuthKinds[number];
+}
+
 export interface IUsers extends Document {
     address: string;
     firstName: string;
@@ -11,14 +18,16 @@ export interface IUsers extends Document {
     username: string;
     password: string;
     isActive: boolean;
+    token: AuthToken;
     typeOfUser: typeOfUser;
     phone: string;
-    refreshToken: string;
     lastLogin: string;
     profilePic?: string;
     gravatar: (size: number) => string;
     fullName: string;
 }
+
+
 
 const UserSchema = new Schema({
     address: { type: String, required: true },
@@ -26,7 +35,11 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true },
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true, minlength: 8, maxlength: 255 },
-    refreshToken: { type: String, required: false },
+    token: {
+        accessToken: { type: String, required: false },
+        refreshToken: { type: String, required: false },
+        kind: { type: String, enum: oAuthKinds, required: false },
+    },
     isActive: { type: Boolean, required: true, default: false },
     typeOfUser: { type: String, enum: typeOfUsers, required: true, trim: true },
     doner: { type: Boolean, require: true, default: false },
@@ -34,6 +47,8 @@ const UserSchema = new Schema({
     lastLogin: { type: String, required: false },
     profilePic: { type: String, required: false }
 }, { timestamps: true });
+
+
 
 UserSchema.plugin(paginate);
 

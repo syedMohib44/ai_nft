@@ -21,52 +21,6 @@ export const generateRandomString = (length: number, options?: { type?: 'char' |
     return result;
 };
 
-interface Tree {
-    _id: any;
-    children: Tree[];
-    [key: string]: any;
-}
-interface FlatObj {
-    parent?: any;
-    _id: any;
-    [key: string]: any;
-}
-
-/**
- * Convert materialized path array into tree structure
- * @param arr An array containing child nodes that contain reference to the parent node (parent reference)
- */
-export const flatToTree = (arr: FlatObj[]) => {
-    const nodesWithNoParent = arr.filter(obj => !obj.parent);
-    const treeArr: Tree[] = [];
-    for (const node of nodesWithNoParent) {
-        const recursiveAddChild = (obj: Tree) => {
-            // find children of the parent
-            const children = arr.filter(val => String(val.parent) === String(obj._id));
-            for (const child of children) {
-                const childObj: Tree = {
-                    ...child,
-                    children: []
-                };
-                // add children of the child node
-                obj.children.push(childObj);
-                recursiveAddChild(childObj);
-            }
-            arr = arr.filter(val => String(val._id) !== String(obj._id));
-        };
-        const tree: Tree = {
-            ...node,
-            children: []
-        };
-
-        // add children for nodes with no parents
-        recursiveAddChild(tree);
-        treeArr.push(tree);
-    }
-
-    return treeArr;
-};
-
 export const capitalize = (word: string) => {
     if (!word || !word.length) {
         return '';

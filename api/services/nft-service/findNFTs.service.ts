@@ -33,7 +33,6 @@ export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
             });
         } else { // check partial matched
             const re = new RegExp(options.q, 'i');
-
             Object.assign(query, {
                 $or: [
                     { username: re }

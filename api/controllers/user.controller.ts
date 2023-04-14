@@ -20,7 +20,6 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             username: req.body.username,
             password: req.body.password
         };
-        console.log(addAuthenticationDto);
         const token = await authenticateUser(addAuthenticationDto);
         res.status(200).json({
             data: { token }
