@@ -42,12 +42,12 @@ export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
         }
     }
 
-    const nfts = await NFTs.paginate(query, options);
+    const nfts = await NFTs.paginate(query, { ...options, populate: { path: 'generateArt', select: 'user minted wish', populate: { path: 'user', select: 'firstName lastName isActive' } } });
     return nfts;
 }
 
 export const findAllNFT_ById = async (_id: number) => {
-    const nfts = await NFTs.findOne({ _id }).populate({ path: 'generatedArts', select: 'firstName lastName isActive ' })
+    const nfts = await NFTs.findOne({ _id }).populate({ path: 'generateArt', select: 'user minted wish' })
     if (!nfts)
         throw new APIError(404, { message: "Zakat cannot be found" });
     return nfts;

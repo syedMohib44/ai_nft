@@ -9,10 +9,7 @@ export interface FindArt_OptionPaginate extends IGetOptionsWithPaginate {
 }
 
 export const findAllArts = async (options: FindArt_OptionPaginate) => {
-    const query = {
-        // populate: 'users',
-        // select: 'firstName lastName isActive'
-    };
+    const query = {};
     if (options.userId)
         Object.assign(query, { user: options.userId });
 
@@ -36,7 +33,7 @@ export const findAllArts = async (options: FindArt_OptionPaginate) => {
         }
     }
 
-    const arts = await GeneratedArts.paginate(query, options);
+    const arts = await GeneratedArts.paginate(query, { ...options, populate: { path: 'user', select: 'firstName lastName isActive' } });
     return arts;
 }
 
