@@ -6,5 +6,4 @@ export interface AddArtDto {
      * You wish is AI command
      */
     wish: string;
-    tag: number;
 }

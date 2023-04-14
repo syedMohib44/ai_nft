@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { getArts, postART } from '../../controllers/art.controller';
+import { deleteART, getArts, postART } from '../../controllers/art.controller';
 import { userRequestHandler } from '../../middlewares/userRequestHandler';
 import { storage } from '../../utils/commonHelper';
 
@@ -9,15 +9,9 @@ const router = Router();
 router.post('/', userRequestHandler(postART));
 router.get('/', userRequestHandler(getArts));
 
-// router.get('/', getProducts);
-// router.post('/', multer({
-//     storage: storage,
-//     limits: {
-//         fileSize: 1000 * 1 * 3000
-//     }
-// }).single('productPic'), userRequestHandler(postProduct));
-// router.put('/', userRequestHandler(putProduct));
-// router.get('/:id', userRequestHandler(getProductById));
+
+//Only for testing will not include in production
+router.delete('/', userRequestHandler(deleteART));
 
 export {
     router as artRoutes

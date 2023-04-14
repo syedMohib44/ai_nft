@@ -8,11 +8,10 @@ export interface FindArt_OptionPaginate extends IGetOptionsWithPaginate {
     userId?: IUsers['_id'];
 }
 
-
 export const findAllArts = async (options: FindArt_OptionPaginate) => {
     const query = {
-        populate: 'users',
-        select: 'firstName lastName isActive'
+        // populate: 'users',
+        // select: 'firstName lastName isActive'
     };
     if (options.userId)
         Object.assign(query, { user: options.userId });

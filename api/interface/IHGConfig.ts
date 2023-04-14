@@ -1,6 +1,6 @@
 export interface Config {
     wish: string;
-    tag: number;
+    tag?: string;
     negative_prompt?: string;
     model: string
     ref: string;

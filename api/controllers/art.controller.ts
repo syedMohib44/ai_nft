@@ -1,11 +1,13 @@
 import { Response, NextFunction } from 'express';
 import { AddArtDto } from '../dto/art/addArtDto';
+import { RemoveArtDto } from '../dto/art/removeArtDto';
 import { AddNFTsDto } from '../dto/nfts/addNFTsDto';
 import { Config } from '../interface/IHGConfig';
 import { Options } from '../interface/IHGOptions';
 import { IUserRequest } from '../interface/IUserRequest';
 import { findAllArts, findAllArtsById } from '../services/art-service/findGeneratedArt.service';
 import { insertGeneratedArt } from '../services/art-service/insertGeneratedArt.service';
+import { removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
 import { findAllNFTs, findAllNFT_ById, FindNFT_OptionPaginate } from '../services/nft-service/findNFTs.service';
 import { insertNFTs } from '../services/nft-service/insertNFT.service';
 
@@ -41,14 +43,12 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
     try {
         const addArtDto: AddArtDto = {
             user: req.user.userId,
-            wish: req.body.wish,
-            tag: -1
+            wish: req.body.wish
         };
         const config: Config = {
-            model: 'stabilityai/stable-diffusion-2',
+            model: 'CompVis/stable-diffusion-v1-4',
             wish: req.body.wish,
             ref: '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',
-            tag: -1,
             negative_prompt: '18+'
         }
         const options: Options = {
@@ -61,3 +61,18 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
         next(err);
     }
 }
+
+
+export const deleteART = async (req: IUserRequest, res: Response, next: NextFunction) => {
+    try {
+        const removeArtDto: RemoveArtDto = {
+            user: req.user.userId,
+            tag: req.body.tag
+        };
+        await removeGeneratedArt(removeArtDto);
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        next(err);
+    }
+}
+
