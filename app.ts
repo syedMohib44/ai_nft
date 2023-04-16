@@ -59,7 +59,7 @@
 //     // console.log(dd);
 //     console.log('Ran successfully');
 // }
-// run();
+// run(); 
 import mongoose from 'mongoose';
 import http from 'http';
 import { App, PORT, MONGO_URI, IS_DEV_MODE } from './api/config/expressSetup';
@@ -71,7 +71,6 @@ server.on('listening', () => {
     mongoose.set('debug', IS_DEV_MODE);
     mongoose.connect(MONGO_URI, {
         autoIndex: IS_DEV_MODE
-        
     });
     mongoose.connection.once('open', () => {
         console.info('Connected to Mongo via Mongoose');

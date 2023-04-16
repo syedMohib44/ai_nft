@@ -17,6 +17,7 @@ export interface IUsers extends Document {
     lastName: string;
     username: string;
     password: string;
+    google: string;
     isActive: boolean;
     token: AuthToken;
     typeOfUser: typeOfUser;
@@ -35,6 +36,7 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true },
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true, minlength: 8, maxlength: 255 },
+    google: { type: String, required: false },
     token: {
         accessToken: { type: String, required: false },
         refreshToken: { type: String, required: false },

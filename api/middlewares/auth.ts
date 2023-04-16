@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import passport from 'passport';
 import { JWTPAYLOAD } from '../interface/JWTPayload';
 import { config } from '../config';
 import { preProcessingFBGO } from '../services/auth-service/login.service';
 import { IUserRequest } from '../interface/IUserRequest';
+import passport from 'passport';
 
 
 export const auth = () => (req: Request, res: Response, next: NextFunction) => {
@@ -53,16 +53,17 @@ export const isUser = (req: Request, res: Response, next: NextFunction) => {
 export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
     return passport.authenticate('google', {
         scope: [
-            'https://www.googleapis.com/auth/plus.login',
-            'https://www.googleapis.com/auth/plus.profile.emails.read'
+            'email',
+            'profile'
         ]
     })(req, res, next);
 };
 
+
 export const googleAuthCallBack = (req: Request, res: Response, next: NextFunction) => {
-    return passport.authenticate('google', (req:IUserRequest, res:Response) => {
-        if (req.user) {
-            const payload = preProcessingFBGO(req.user.username, 'google');
+    return passport.authenticate('google', async (err: any, profile: any) => {
+        if (profile) {
+            const payload = await preProcessingFBGO(profile.username, 'google');
             try {
                 res.status(200).json({
                     data: { payload }
@@ -72,6 +73,5 @@ export const googleAuthCallBack = (req: Request, res: Response, next: NextFuncti
             }
         }
         else { res.sendStatus(401); }
-    });
+    })(req, res, next);
 };
-

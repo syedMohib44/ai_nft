@@ -6,12 +6,13 @@ import bodyParser from 'body-parser';
 import { renderFile } from 'ejs';
 import cors from 'cors';
 import { config } from '../config';
-//import '../middlewares/OAuth';
 import '../middlewares/auth';
 import '../middlewares/jwt';
+import '../middlewares/OAuth';
 import './mongoosePaginate';
 import { APIErrorHandler, badDataErrorhandler, defaultErrorHandler, mongooseErrorHandler, multerErrorHandler, routeNotFoundHandler } from '../middlewares/handleError';
 import { apiRoutes } from '../routes';
+import passport from 'passport';
 
 export const PORT = config.port;
 export const MONGO_URI = config.db.uri;
@@ -24,12 +25,12 @@ export class App {
         this.app = express();
         this.config();
         this.routes();
-        if (!IS_DEV_MODE) {
-            this.app.use(express.static(path.join(__dirname, '../../client/build')));
-            this.app.use('*', (req, res, next) => {
-                res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
-            });
-        }
+        // if (!IS_DEV_MODE) {
+        //     this.app.use(express.static(path.join(__dirname, '../../client/build')));
+        //     this.app.use('*', (req, res, next) => {
+        //         res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+        //     });
+        // }
         this.errorHandler();
     }
 
@@ -37,6 +38,7 @@ export class App {
         this.app.set('port', PORT || 3000);
         this.app.use(morgan('combined'));
         this.app.use(cors());
+        this.app.use(passport.initialize());
         // Alternate of using cors
         //     this.app.use((req, res, next) => {
         //         res.header("Access-Control-Allow-Origin", "*");

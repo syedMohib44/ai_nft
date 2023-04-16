@@ -13,7 +13,6 @@ const generate = async (config: Config, options?: Options) => {
     console.log('running');
     const blob = await hgInterface.textToImage({
         inputs: config.wish,
-        negative_prompt: config.negative_prompt,
         model: config.model,
     }, { ...options });
 

@@ -73,6 +73,7 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
 
 
 export const preProcessingFBGO = async (username: string, payloadOf: AuthToken['kind']) => {
+    console.log('username = ', username, payloadOf);
     const user = await Users.findOne({
         username,
         'token.kind': payloadOf
