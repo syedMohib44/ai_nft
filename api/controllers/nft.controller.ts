@@ -48,3 +48,7 @@ export const postNFT = async (req: IUserRequest, res: Response, next: NextFuncti
         next(err);
     }
 }
+
+// Fitness app using AI
+// Audio to text for health app
+// Online therapist Audio to Audio

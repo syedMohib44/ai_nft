@@ -6,7 +6,7 @@ import { Options } from '../interface/IHGOptions';
 import { IUserRequest } from '../interface/IUserRequest';
 import { findAllArts, findAllArtsById, FindArt_OptionPaginate } from '../services/art-service/findGeneratedArt.service';
 import { insertGeneratedArt } from '../services/art-service/insertGeneratedArt.service';
-import { removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
+import { removeAllArtById, removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
 
 
 export const getArts = async (req: IUserRequest, res: Response, next: NextFunction) => {
@@ -42,8 +42,12 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
             user: req.user.userId,
             wish: req.body.wish
         };
+        console.log(addArtDto);
+
+        //stabilityai/stable-diffusion-2
+        //CompVis/stable-diffusion-v1-4
         const config: Config = {
-            model: 'CompVis/stable-diffusion-v1-4',
+            model: 'stabilityai/stable-diffusion-2',
             wish: req.body.wish,
             ref: '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',
             negative_prompt: '18+'
@@ -67,6 +71,20 @@ export const deleteART = async (req: IUserRequest, res: Response, next: NextFunc
             tag: req.body.tag
         };
         await removeGeneratedArt(removeArtDto);
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+export const deleteAllART = async (req: IUserRequest, res: Response, next: NextFunction) => {
+    try {
+        const removeArtDto: RemoveArtDto = {
+            user: req.user.userId,
+            tag: req.body.tag
+        };
+        await removeAllArtById(removeArtDto);
         res.status(200).json({ status: 'success' });
     } catch (err) {
         next(err);

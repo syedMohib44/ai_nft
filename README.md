@@ -1,6 +1,7 @@
 # GETTING STARTED
 - Clone the project in your local repository
 - Open CLI or Git Bash and navigate to the project folder 
+- Make sure you are using node version 19.
 - Run command "npm install"
 - Navigate to client folder by using command "cd client"
 - Run command "npm install"
@@ -18,7 +19,7 @@
 ## TODO
 - <del>Registration<del>
 - <del>Simple Login<del>
-- Login Authentiation using Google
+- <del>Login Authentiation using Google<del>
 - Integrate web3 calls and checks from contract side(After contract deployment)
 
 # POSTMAN INVITATION
