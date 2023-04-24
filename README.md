@@ -24,7 +24,7 @@
 
 # POSTMAN INVITATION
 - Please join Postman workspace below for api testing and structure for api call.
-- https://app.getpostman.com/join-team?invite_code=d41c013752e5d7b7057bdc38eec208d9&ws=4e5517e6-424c-4423-b7f1-0bb99ae0bae5
+- https://app.getpostman.com/join-team?invite_code=d41c013752e5d7b7057bdc38eec208d9&target_code=204604a39c3e5acca4e50ff9ed23145f
 
 # README ANNOTATION
 - https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
