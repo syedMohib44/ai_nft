@@ -40,7 +40,9 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
     try {
         const addArtDto: AddArtDto = {
             user: req.user.userId,
-            wish: req.body.wish
+            wish: req.body.wish,
+            description: req.body.description,
+            name: req.body.name
         };
         console.log(addArtDto);
 

@@ -7,6 +7,7 @@ export interface INFTs extends Document {
     _id: any;
     generateArt: IGeneratedArts['_id'];
     amount: number;
+    hash: string;
     tokenId: number;
     txId: string;
     currencyType: string;
@@ -16,6 +17,7 @@ const NFTsSchema = new Schema({
     generateArt: { type: Schema.Types.ObjectId, ref: 'GeneratedArts', required: true },
     tokenId: { type: Number, require: true, default: 0 },
     txId: { type: String, require: true },
+    hash: { type: String, require: true },
     amount: { type: Number, require: true, default: 0 },
     currencyType: { type: String, require: true }
 }, { timestamps: true })

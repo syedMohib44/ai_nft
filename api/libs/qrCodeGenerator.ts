@@ -1,7 +1,7 @@
 import { Attachment } from 'nodemailer/lib/mailer';
 // tslint:disable-next-line: no-var-requires
 const QRCode = require('easyqrcodejs-nodejs');
-//import QrCodeClass from 'easyqrcode-nodejs';
+// import QrCodeClass from 'easyqrcode-nodejs';
 
 interface IOptions {
     text?: string;

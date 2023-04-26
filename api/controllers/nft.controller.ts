@@ -36,11 +36,12 @@ export const postNFT = async (req: IUserRequest, res: Response, next: NextFuncti
     try {
         const addNFTsDto: AddNFTsDto = {
             user: req.user.userId,
+            address: req.user.address,
             amount: req.body.amount,
             tokenId: +req.body.tokenId,
             txId: req.body.txId,
             generateArt: req.body.generateArtId,
-            wish: req.body.wish
+            put: req.body.put
         };
         await insertNFTs(addNFTsDto);
         res.status(200).json({ status: 'success' });

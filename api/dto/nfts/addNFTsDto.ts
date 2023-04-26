@@ -3,12 +3,11 @@ import { IUsers } from "../../entity/Users";
 
 export interface AddNFTsDto {
     user: IUsers['_id'];
+    address: string;
     generateArt: IGeneratedArts['_id'];
-    /**
-     * You wish is AI command
-     */
-    wish: string;
     txId: string;
+    hash?: string;
     tokenId: number;
+    put: boolean | false;
     amount: number;
 }

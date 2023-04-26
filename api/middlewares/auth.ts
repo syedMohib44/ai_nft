@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { JWTPAYLOAD } from '../interface/JWTPayload';
 import { config } from '../config';
-import { preProcessingFBGO } from '../services/auth-service/login.service';
+import { preProcessingGO } from '../services/auth-service/login.service';
 import { IUserRequest } from '../interface/IUserRequest';
 import passport from 'passport';
 
@@ -63,7 +63,7 @@ export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
 export const googleAuthCallBack = (req: Request, res: Response, next: NextFunction) => {
     return passport.authenticate('google', async (err: any, profile: any) => {
         if (profile) {
-            const payload = await preProcessingFBGO(profile.username, 'google');
+            const payload = await preProcessingGO(profile.username, 'google');
             try {
                 res.status(200).json({
                     data: { payload }

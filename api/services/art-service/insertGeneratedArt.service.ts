@@ -6,6 +6,7 @@ import { AddArtDto } from "../../dto/art/addArtDto";
 import GeneratedArts, { IGeneratedArts } from "../../entity/GeneratedArts";
 import { APIError } from "../../utils/error";
 import crypto from 'crypto';
+const ipfs_uploader = require('../../utils/ipfs-uploader.cjs')
 
 
 const generate = async (config: Config, options?: Options) => {
@@ -18,6 +19,11 @@ const generate = async (config: Config, options?: Options) => {
 
     const arrayBuffer = await blob.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+
+    // const gateway = 'https://ipfs.io/ipfs/';
+    const cid = await ipfs_uploader.uploadToIPFS(buffer);
+    console.log(cid);
+
     fs.writeFileSync(`${config.tag}.png`, buffer);
 
     console.log('Ran successfully');
@@ -40,6 +46,8 @@ export const insertGeneratedArt = async (addArtDto: AddArtDto, config: Config, o
     generateArt.user = addArtDto.user;
     generateArt.tag = tagHash;
     generateArt.wish = addArtDto.wish;
+    generateArt.name = addArtDto.name;
+    generateArt.description = addArtDto.description;
     config.wish = generateArt.wish;
     config.tag = generateArt.tag;
     await generate(config, options);

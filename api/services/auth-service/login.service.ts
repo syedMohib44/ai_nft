@@ -39,11 +39,7 @@ export const refreshToken = async (refreshToken: string) => {
 async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
     const user = await Users
         .findOne({ username: addAuthenticationDto.username });
-    // //.lean()
-    // .populate({
-    //     path: 'business',
-    //     select: 'name isActive'
-    // });
+        
     if (!user) throw new APIError(401, {
         message: 'Invalid Username or Password'
     });
@@ -62,6 +58,7 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
         address: user.address
     };
 
+    // TODO: Will remove refresh token from db.
     const token = jwt.sign(payload, config.jwt_secret as string, { expiresIn: config.jwt_life });
     const refreshToken = jwt.sign(payload, config.refresh_jwt_secret as string, { expiresIn: config.refresh_jwt_life });
     user.lastLogin = moment.utc().format();
@@ -72,7 +69,7 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
 }
 
 
-export const preProcessingFBGO = async (username: string, payloadOf: AuthToken['kind']) => {
+export const preProcessingGO = async (username: string, payloadOf: AuthToken['kind']) => {
     console.log('username = ', username, payloadOf);
     const user = await Users.findOne({
         username,

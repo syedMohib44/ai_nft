@@ -8,7 +8,10 @@ export const removeGeneratedArt = async (removeArtDto: RemoveArtDto) => {
     const generatedArt = await GeneratedArts.findOne({ tag: removeArtDto.tag });
     if (!generatedArt)
         throw new APIError(400, { message: 'Art not found' });
-    fs.unlinkSync(`${generatedArt.tag}.png`);
+
+    if (fs.existsSync(`${generatedArt.tag}.png`))
+        fs.unlinkSync(`${generatedArt.tag}.png`);
+
     await generatedArt.delete();
 }
 
@@ -17,8 +20,9 @@ export const removeAllArtById = async (removeArtDto: RemoveArtDto) => {
     if (!generatedArts)
         throw new APIError(400, { message: 'Art not found' });
 
-    for(const generatedArt of generatedArts){
-        fs.unlinkSync(`${generatedArt.tag}.png`);
+    for (const generatedArt of generatedArts) {
+        if (fs.existsSync(`${generatedArt.tag}.png`))
+            fs.unlinkSync(`${generatedArt.tag}.png`);
         await generatedArt.delete();
     }
 }

@@ -59,7 +59,7 @@
 //     // console.log(dd);
 //     console.log('Ran successfully');
 // }
-// run(); 
+// run();
 import mongoose from 'mongoose';
 import http from 'http';
 import { App, PORT, MONGO_URI, IS_DEV_MODE } from './api/config/expressSetup';
