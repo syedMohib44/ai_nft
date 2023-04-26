@@ -20,6 +20,9 @@
 - <del>Registration<del>
 - <del>Simple Login<del>
 - <del>Login Authentiation using Google<del>
+- <del>Putting image to IPFS server on minting<del>
+- <del>Added contracts abi and address<del>
+- Sign from backend using geth and interact with contract
 - Integrate web3 calls and checks from contract side(After contract deployment)
 
 # POSTMAN INVITATION
