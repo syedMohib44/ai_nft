@@ -22,10 +22,6 @@ export class InfuraClient {
         return await this.web3Client.eth.getBlockNumber();
     }
 
-    async getCurrentEthermonBalance(address: string) {
-        return await this.web3Client.eth.getBalance(address);
-    }
-
     async getLatestBlockTime() {
         return (await this.web3Client.eth.getBlock('latest')).timestamp;
     }

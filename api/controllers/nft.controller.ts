@@ -40,11 +40,12 @@ export const postNFT = async (req: IUserRequest, res: Response, next: NextFuncti
             amount: req.body.amount,
             tokenId: +req.body.tokenId,
             txId: req.body.txId,
-            generateArt: req.body.generateArtId,
+            generateArt: req.body.generateArt,
+            hash: req.body.hash,
             put: req.body.put
         };
-        await insertNFTs(addNFTsDto);
-        res.status(200).json({ status: 'success' });
+        const data = await insertNFTs(addNFTsDto);
+        res.status(200).json({ status: 'success', data });
     } catch (err) {
         next(err);
     }

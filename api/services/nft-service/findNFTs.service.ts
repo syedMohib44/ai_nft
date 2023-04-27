@@ -2,6 +2,7 @@ import { IUsers } from "../../entity/Users";
 import { IGetOptionsWithPaginate } from "../../interface/IGetOptions";
 import { APIError } from "../../utils/error";
 import NFTs from "../../entity/NFTs";
+import Web3 from "web3";
 
 export interface FindNFT_OptionPaginate extends IGetOptionsWithPaginate {
     userId?: IUsers['_id'];
@@ -13,6 +14,12 @@ export interface FindNFT_OptionPaginate extends IGetOptionsWithPaginate {
 
 
 export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
+    if (options.address && !Web3.utils.isAddress(options.address))
+        throw new APIError(400, {
+            message: 'Address is invalid',
+            error: 'invalid_send_to_address'
+        });
+
     const query = {
         populate: 'generatedarts',
         select: 'user'
@@ -48,6 +55,6 @@ export const findAllNFTs = async (options: FindNFT_OptionPaginate) => {
 export const findAllNFT_ById = async (_id: number) => {
     const nfts = await NFTs.findOne({ _id }).populate({ path: 'generateArt', select: 'user minted wish' })
     if (!nfts)
-        throw new APIError(404, { message: "Zakat cannot be found" });
+        throw new APIError(404, { message: "NFT cannot be found" });
     return nfts;
 }

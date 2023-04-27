@@ -29,36 +29,30 @@ export const insertNFTs_Matic = async (addNFTsDto: AddNFTsDto) => {
 }
 
 export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
-    if (!Web3.utils.isAddress('addStakingDto.staker')) {
-        console.log("send_to_address_invalid|data=", 'addStakingDto.staker');
+    if (!Web3.utils.isAddress(addNFTsDto.address))
         throw new APIError(400, {
             message: 'Address is invalid',
             error: 'invalid_send_to_address'
         });
-    }
-    const w3 = new InfuraClient('https://polygon-mainnet.g.alchemy.com/v2/opi8YDCuDSqpB98YoFWhb8VQRxTHrNsh');
+
+    const w3 = new InfuraClient('https://polygon-mumbai.g.alchemy.com/v2/N6tdxDQu3XPYqL2MqHlIkxYoegK04yzh');
 
     if (!addNFTsDto)
         throw new APIError(400, { message: 'Mendatory fields are empty' });
     //TODO: Need to put web3(onchain) validation here 
+
     const generatedImage = await GeneratedImages.findOne({ _id: addNFTsDto.generateArt, user: addNFTsDto.user });
     if (!generatedImage)
         throw new APIError(400, { message: 'Art donot exists' });
 
-
-
-    if (addNFTsDto.put) {
-
-        // const gateway = 'https://ipfs.io/ipfs/';
-        const buffer = fs.readFileSync(`${generatedImage.tag}.png`);
-        const cid = await ipfs_uploader.uploadToIPFS(buffer);
-        console.log(cid);
-
+    if (+addNFTsDto.put) {
+        if (!addNFTsDto.hash)
+            throw new APIError(400, { message: 'IPFS hash not available' });
         const nft: INFTs = new NFTs();
         nft.generateArt = generatedImage._id;
         nft.txId = addNFTsDto.txId;
         nft.tokenId = addNFTsDto.tokenId;
-        nft.hash = cid;
+        nft.hash = addNFTsDto.hash;
         nft.amount = addNFTsDto.amount;
         nft.currencyType = "ETH";
         generatedImage.minted = true;
@@ -74,6 +68,8 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
     }
 
     // Adding file to IPFS
+    const buffer = fs.readFileSync(`${generatedImage.tag}.png`);
+    const cid = await ipfs_uploader.uploadToIPFS(buffer);
     // const { create } = await import('ipfs-core')
     // const gateway = 'https://ipfs.io/ipfs/'
     // const ipfs = await create();
@@ -81,19 +77,19 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
     // const ipfsHash = await ipfs.add(buffer)
     // console.log(ipfsHash.cid , ' ==== ', ipfsHash.path)
 
-    const aiNFT = await w3.getAiNftContract();
+
+    const aiNFT = await w3.getAiNftDistroContract();
     const nonce1 = Math.floor(Math.random() * 429496729);
     const nonce2 = Math.floor(Math.random() * 429496729);
 
-    const hashed = await aiNFT.methods.getMessageHash(addNFTsDto.address, nonce1, nonce2, generatedImage.name, generatedImage.description, addNFTsDto.hash).call();
+    const hashed = await aiNFT.methods.getMessageHash(addNFTsDto.address, nonce1, nonce2, generatedImage.name, generatedImage.description, cid).call();
     const token = await aiNFT.methods.getVerifySignature(addNFTsDto.address, hashed).call();
-
-    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545/'));
+    const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545/'));
     await unlockAccount(web3);
     const { r, s, v } = await singMessage(web3, token);
 
     return {
-        "hash": 'ipfsHash.path',
+        "hash": addNFTsDto.hash,
         "description": generatedImage.description,
         "name": generatedImage.name,
         "nonce1": nonce1,

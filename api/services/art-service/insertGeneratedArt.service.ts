@@ -6,8 +6,9 @@ import { AddArtDto } from "../../dto/art/addArtDto";
 import GeneratedArts, { IGeneratedArts } from "../../entity/GeneratedArts";
 import { APIError } from "../../utils/error";
 import crypto from 'crypto';
-const ipfs_uploader = require('../../utils/ipfs-uploader.cjs')
-
+import Web3 from "web3";
+// const ipfs_uploader = require('../../utils/ipfs-uploader.cjs')
+// import uploadToIPFS from 'ipfs-uploader';
 
 const generate = async (config: Config, options?: Options) => {
     const hgInterface = new HfInference(config.ref);
@@ -21,8 +22,8 @@ const generate = async (config: Config, options?: Options) => {
     const buffer = Buffer.from(arrayBuffer);
 
     // const gateway = 'https://ipfs.io/ipfs/';
-    const cid = await ipfs_uploader.uploadToIPFS(buffer);
-    console.log(cid);
+    // const cid = await ipfs_uploader.uploadToIPFS(buffer);
+    // console.log(cid);
 
     fs.writeFileSync(`${config.tag}.png`, buffer);
 
@@ -34,6 +35,11 @@ const artExists = async (generatedArt: IGeneratedArts[], tag: string) => {
 }
 
 export const insertGeneratedArt = async (addArtDto: AddArtDto, config: Config, options?: Options) => {
+    if (!Web3.utils.isAddress(addArtDto.address))
+        throw new APIError(400, {
+            message: 'Address is invalid',
+            error: 'invalid_send_to_address'
+        });
     const tagHash = crypto.createHash('md5').update(`${addArtDto.wish}${Date.now()}`).digest('hex');
 
     const generatedArts: IGeneratedArts[] = await GeneratedArts.find();

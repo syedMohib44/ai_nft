@@ -1,7 +1,7 @@
 {
   "name": "ai-nft",
   "version": "1.0.0",
-  "description": "",
+  "description": "AI generated NFTs using stable diffusion.",
   "scripts": {
     "start": "nodemon -e js,json,ts --exec ts-node-dev app.ts",
     "build": "rm -rf build && tsc",
@@ -12,7 +12,7 @@
     "test:item": "node_modules/.bin/jest --testPathPattern=item.spec.ts --watchAll",
     "test:mon": "node_modules/.bin/jest --testPathPattern=mon.spec.ts --watchAll"
   },
-  "author": "",
+  "author": "Syed Mohib",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",

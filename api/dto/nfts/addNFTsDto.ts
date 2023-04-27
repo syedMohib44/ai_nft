@@ -8,6 +8,6 @@ export interface AddNFTsDto {
     txId: string;
     hash?: string;
     tokenId: number;
-    put: boolean | false;
+    put: boolean;
     amount: number;
 }

@@ -1,12 +1,14 @@
 import { Response, NextFunction } from 'express';
 import { AddArtDto } from '../dto/art/addArtDto';
 import { RemoveArtDto } from '../dto/art/removeArtDto';
+import { UpdateArtDto } from '../dto/art/updateArtDto';
 import { Config } from '../interface/IHGConfig';
 import { Options } from '../interface/IHGOptions';
 import { IUserRequest } from '../interface/IUserRequest';
 import { findAllArts, findAllArtsById, FindArt_OptionPaginate } from '../services/art-service/findGeneratedArt.service';
 import { insertGeneratedArt } from '../services/art-service/insertGeneratedArt.service';
-import { removeAllArtById, removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
+import { removeAllArtByUser, removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
+import { updateGeneratedArt } from '../services/art-service/updateGenerateArt.service';
 
 
 export const getArts = async (req: IUserRequest, res: Response, next: NextFunction) => {
@@ -15,6 +17,7 @@ export const getArts = async (req: IUserRequest, res: Response, next: NextFuncti
             select: req.query.select,
             page: req.query.page ? +req.query.page : 1,
             userId: req.user.userId,
+            address: req.user.address,
             limit: req.query.limit ? +req.query.limit : 10,
             sort: req.query.sort,
             q: req.query.q as string
@@ -40,11 +43,11 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
     try {
         const addArtDto: AddArtDto = {
             user: req.user.userId,
+            address: req.user.address,
             wish: req.body.wish,
             description: req.body.description,
             name: req.body.name
         };
-        console.log(addArtDto);
 
         //stabilityai/stable-diffusion-2
         //CompVis/stable-diffusion-v1-4
@@ -65,11 +68,27 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
     }
 }
 
+export const putArt = async (req: IUserRequest, res: Response, next: NextFunction) => {
+    try {
+        const updateArtDto: UpdateArtDto = {
+            user: req.user.userId,
+            address: req.user.address,
+            tag: req.body.tag,
+            description: req.body.description,
+            name: req.body.name
+        };
+        await updateGeneratedArt(updateArtDto);
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 export const deleteART = async (req: IUserRequest, res: Response, next: NextFunction) => {
     try {
         const removeArtDto: RemoveArtDto = {
             user: req.user.userId,
+            address: req.user.address,
             tag: req.body.tag
         };
         await removeGeneratedArt(removeArtDto);
@@ -84,9 +103,10 @@ export const deleteAllART = async (req: IUserRequest, res: Response, next: NextF
     try {
         const removeArtDto: RemoveArtDto = {
             user: req.user.userId,
+            address: req.user.address,
             tag: req.body.tag
         };
-        await removeAllArtById(removeArtDto);
+        await removeAllArtByUser(removeArtDto);
         res.status(200).json({ status: 'success' });
     } catch (err) {
         next(err);
