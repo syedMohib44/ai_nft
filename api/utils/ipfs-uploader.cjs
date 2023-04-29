@@ -7,12 +7,18 @@
     }
   },
  */
-const uploadToIPFS = async (data) => {
-    const IPFS = await import('ipfs-core');
-    const ipfs = await IPFS.create();
-    const result = await ipfs.add(data)
-    ipfs.stop();
-    return result.cid;
+const uploadToIPFS = async (data, apiKey) => {
+  const IPFS = await import('ipfs-http-client');
+  const ipfs = IPFS.create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+      "Authorization": apiKey
+    }
+  });
+  const result = await ipfs.add(data)
+  return result.path;
 }
 
 

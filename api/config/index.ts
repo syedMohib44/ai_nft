@@ -38,6 +38,10 @@ const configuration = {
         password: process.env.MAIL_PASSWORD as string,
         bcc: process.env.BCC as string,
     },
+    infura_ipfs:{
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET
+    },
     contract: {
         ai_nft: process.env.AI_NFT as string,
         ai_nft_distro: process.env.AI_NFT_DISTRO as string,

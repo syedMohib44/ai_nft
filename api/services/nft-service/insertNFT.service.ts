@@ -4,8 +4,9 @@ import { AddNFTsDto } from "../../dto/nfts/addNFTsDto";
 import GeneratedImages from "../../entity/GeneratedArts";
 import NFTs, { INFTs } from "../../entity/NFTs";
 import { singMessage, unlockAccount } from "../../libs/ema_helper";
-import { InfuraClient } from "../../libs/infuraClient";
+import { Web3Client } from "../../libs/infuraClient";
 import { APIError } from "../../utils/error";
+import { config } from "../../config";
 
 const ipfs_uploader = require('../../utils/ipfs-uploader.cjs')
 
@@ -14,7 +15,6 @@ export const insertNFTs_Matic = async (addNFTsDto: AddNFTsDto) => {
     if (!addNFTsDto)
         throw new APIError(400, { message: 'Mendatory fields are empty' });
 
-    //TODO: Need to put web3(onchain) validation here 
     const generatedImage = await GeneratedImages.exists({ _id: addNFTsDto.generateArt, user: addNFTsDto.user });
     if (!generatedImage)
         throw new APIError(400, { message: 'Art donot exists' });
@@ -29,17 +29,10 @@ export const insertNFTs_Matic = async (addNFTsDto: AddNFTsDto) => {
 }
 
 export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
-    if (!Web3.utils.isAddress(addNFTsDto.address))
-        throw new APIError(400, {
-            message: 'Address is invalid',
-            error: 'invalid_send_to_address'
-        });
-
-    const w3 = new InfuraClient('https://polygon-mumbai.g.alchemy.com/v2/N6tdxDQu3XPYqL2MqHlIkxYoegK04yzh');
+    const w3 = new Web3Client('https://polygon-mumbai.g.alchemy.com/v2/N6tdxDQu3XPYqL2MqHlIkxYoegK04yzh');
 
     if (!addNFTsDto)
         throw new APIError(400, { message: 'Mendatory fields are empty' });
-    //TODO: Need to put web3(onchain) validation here 
 
     const generatedImage = await GeneratedImages.findOne({ _id: addNFTsDto.generateArt, user: addNFTsDto.user });
     if (!generatedImage)
@@ -69,7 +62,9 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
 
     // Adding file to IPFS
     const buffer = fs.readFileSync(`${generatedImage.tag}.png`);
-    const cid = await ipfs_uploader.uploadToIPFS(buffer);
+    const apiKey = `Basic ${Buffer.from(`${config.infura_ipfs.api_key}:${config.infura_ipfs.api_secret}`).toString("base64")}`;
+    const cid = await ipfs_uploader.uploadToIPFS(buffer, apiKey);
+
     // const { create } = await import('ipfs-core')
     // const gateway = 'https://ipfs.io/ipfs/'
     // const ipfs = await create();

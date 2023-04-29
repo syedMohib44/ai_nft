@@ -6,7 +6,7 @@ import { Config } from '../interface/IHGConfig';
 import { Options } from '../interface/IHGOptions';
 import { IUserRequest } from '../interface/IUserRequest';
 import { findAllArts, findAllArtsById, FindArt_OptionPaginate } from '../services/art-service/findGeneratedArt.service';
-import { insertGeneratedArt } from '../services/art-service/insertGeneratedArt.service';
+import { insertGeneratedArt, insertImageToIPFS } from '../services/art-service/insertGeneratedArt.service';
 import { removeAllArtByUser, removeGeneratedArt } from '../services/art-service/removeGeneratedArt.service';
 import { updateGeneratedArt } from '../services/art-service/updateGenerateArt.service';
 
@@ -55,7 +55,11 @@ export const postART = async (req: IUserRequest, res: Response, next: NextFuncti
             model: 'stabilityai/stable-diffusion-2',
             wish: req.body.wish,
             ref: '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',
-            negative_prompt: '18+'
+            negative_prompt: '18+',
+            height: req.body.height,
+            width: req.body.width,
+            guidance_scale: req.body.guidance_scale,
+            num_inference_steps: req.body.num_inference_steps
         }
         const options: Options = {
             use_gpu: true,
@@ -112,4 +116,16 @@ export const deleteAllART = async (req: IUserRequest, res: Response, next: NextF
         next(err);
     }
 }
+
+
+
+export const postArtToIPFS = async (req: IUserRequest, res: Response, next: NextFunction) => {
+    try {
+        await insertImageToIPFS(req.body.tag);
+        res.status(200).json({ status: 'success' });
+    } catch (err) {
+        next(err);
+    }
+}
+
 

@@ -1,4 +1,4 @@
 declare module 'ipfs-uploader' {
-  function uploadToIPFS(data: Buffer): Promise<string>;
+  function uploadToIPFS(data: Buffer, apiKey: string): Promise<string>;
   export = uploadToIPFS;
 }

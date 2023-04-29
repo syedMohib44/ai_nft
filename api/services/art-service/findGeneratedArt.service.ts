@@ -2,7 +2,6 @@ import GeneratedArts from "../../entity/GeneratedArts";
 import { APIError } from "../../utils/error";
 import { IUsers } from "../../entity/Users";
 import { IGetOptionsWithPaginate } from "../../interface/IGetOptions";
-import Web3 from "web3";
 
 
 export interface FindArt_OptionPaginate extends IGetOptionsWithPaginate {
@@ -11,11 +10,6 @@ export interface FindArt_OptionPaginate extends IGetOptionsWithPaginate {
 }
 
 export const findAllArts = async (options: FindArt_OptionPaginate) => {
-    if (options.address && !Web3.utils.isAddress(options.address))
-        throw new APIError(400, {
-            message: 'Address is invalid',
-            error: 'invalid_send_to_address'
-        });
     const query = {};
     if (options.userId)
         Object.assign(query, { user: options.userId });

@@ -3,7 +3,7 @@ import { AbiItem } from 'web3-utils'
 import { config } from '../config';
 
 
-export class InfuraClient {
+export class Web3Client {
     public InfuraGeneralClient: any;
     public infuraMaticClient: any;
 

@@ -22,8 +22,10 @@
 - <del>Login Authentiation using Google<del>
 - <del>Putting image to IPFS server on minting<del>
 - <del>Added contracts abi and address<del>
-- Sign from backend using geth and interact with contract
-- Integrate web3 calls and checks from contract side(After contract deployment)
+- <del>Sign from backend using geth and interact with contract<del>
+- <del>Integrate web3 calls and checks from contract side(After contract deployment)<del>
+- Update user profile
+- Connect all apis with frontend
 
 # POSTMAN INVITATION
 - Please join Postman workspace below for api testing and structure for api call.

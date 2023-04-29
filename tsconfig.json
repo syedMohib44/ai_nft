@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "typeRoots": [
+      "api/utils/@types",
+      "node_modules/@types",
+    ],
     "esModuleInterop": true,
     "target": "ES2020",
     "noImplicitAny": true,
@@ -9,6 +13,7 @@
     "outDir": "dist",
     "strict": true
   },
+  "include": ["api"],
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
