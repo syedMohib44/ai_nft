@@ -7,8 +7,14 @@ import { JWTPAYLOAD } from '../../interface/JWTPayload';
 import { config } from '../../config';
 import moment from 'moment';
 import { appendImagePath } from '../../utils/image-append';
+import Web3 from 'web3';
 
 export const authenticateUser = async (addAuthenticationDto: AddAuthenticationDto) => {
+    if (!Web3.utils.isAddress(addAuthenticationDto.address))
+        throw new APIError(400, {
+            message: 'Address is invalid',
+            error: 'invalid_send_to_address'
+        });
 
     const tokens = await preProcessing(addAuthenticationDto);
     return tokens;
@@ -38,8 +44,8 @@ export const refreshToken = async (refreshToken: string) => {
 
 async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
     const user = await Users
-        .findOne({ username: addAuthenticationDto.username });
-        
+        .findOne({ address: addAuthenticationDto.address });
+
     if (!user) throw new APIError(401, {
         message: 'Invalid Username or Password'
     });
@@ -48,7 +54,6 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
     if (!isValid) throw new APIError(401, {
         message: 'Invalid Username or Password'
     });
-
 
     const payload: JWTPAYLOAD = {
         userId: user._id,

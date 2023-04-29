@@ -44,7 +44,6 @@ const UserSchema = new Schema({
     },
     isActive: { type: Boolean, required: true, default: false },
     typeOfUser: { type: String, enum: typeOfUsers, required: true, trim: true },
-    doner: { type: Boolean, require: true, default: false },
     phone: { type: String, trim: true },
     lastLogin: { type: String, required: false },
     profilePic: { type: String, required: false }

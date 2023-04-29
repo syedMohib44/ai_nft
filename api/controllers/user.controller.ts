@@ -9,6 +9,8 @@ import { validate } from '../libs/validator/validate';
 import { IUserRequest } from '../interface/IUserRequest';
 import { changePassword } from '../services/auth-service/changePassword.service';
 import { forgotPassword } from '../services/auth-service/forgotPassword.service';
+import { findUserByAddress } from '../services/auth-service/findUserByAddress.service';
+import { resetPassword } from '../services/auth-service/resetPassword.service';
 //import { changePassword } from '../services/auth-service/changePassword.service';
 //import { changeEmail } from '../services/auth-service/changeEmail.service';
 //import { updateBlackListedSidebarMenus } from '../services/sidebar-service/updateBlackListedSidebarMenus.service';
@@ -16,13 +18,14 @@ import { forgotPassword } from '../services/auth-service/forgotPassword.service'
 
 export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log(req.body);
         const addAuthenticationDto: AddAuthenticationDto = {
-            username: req.body.username,
+            address: req.body.address,
             password: req.body.password
         };
         const token = await authenticateUser(addAuthenticationDto);
         res.status(200).json({
-            data: { token }
+            data: token
         });
     } catch (err) {
         next(err);
@@ -67,6 +70,18 @@ export const postForgotPassword = async (req: Request, res: Response, next: Next
     }
 };
 
+export const getUserExists = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await findUserByAddress(req.params.address);
+        console.log(result);
+        res.status(200).json({
+            data: result
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
 export const tokenRefresh = async (req: Request, res: Response, next: NextFunction) => {
 
     const oldToken = req.body.refreshToken;
@@ -80,18 +95,18 @@ export const tokenRefresh = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-// export const postVerifyForgotPassword = async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//         await resetPassword(req.body.code, req.body.newPassword, req.body.confirmPassword);
+export const postVerifyForgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await resetPassword(req.body.code, req.body.newPassword, req.body.confirmPassword);
 
-//         res.status(200).json({
-//             status: 'success',
-//             data: 'Password has been updated'
-//         });
-//     } catch (err) {
-//         return next(err);
-//     }
-// };
+        res.status(200).json({
+            status: 'success',
+            data: 'Password has been updated'
+        });
+    } catch (err) {
+        return next(err);
+    }
+};
 
 export const postChangePassword = async (req: IUserRequest, res: Response) => {
     const schema = Joi.object({

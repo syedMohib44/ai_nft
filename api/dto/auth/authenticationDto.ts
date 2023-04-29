@@ -1,5 +1,5 @@
 
 export interface AddAuthenticationDto {
-    username: string;
+    address: string;
     password: string;
 }
