@@ -50,6 +50,7 @@ passport.use(new GoogleStrategy(googleOptions, async (accessToken: any, refreshT
             user.google = profile.id;
             user.lastName = profile.name.familyName;
             user.typeOfUser = 'user';
+            user.isActive = true;
             user.profilePic = profile._json.picture;
             user.phone = (profile._json.location) ? profile._json.location.name : '';
             await user.save();

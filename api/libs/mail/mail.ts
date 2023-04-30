@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 // tslint:disable-next-line: no-var-requires
 const hbs = require('nodemailer-express-handlebars');
-import handlebars from 'express-handlebars';
+import { create } from 'express-handlebars';
 import { Attachment } from 'nodemailer/lib/mailer';
 import { config } from '../../config';
 
@@ -19,13 +19,15 @@ export interface IMailOptions {
 }
 
 export const sendMail = (mailOptions: IMailOptions) => {
+    //https://ethereal.email/create
+    //TODO: Will replace port 587 with 465 when purchase our own sever.
     const transporter = nodemailer.createTransport({
         host: config.mail.host,
-        port: 465,
-        secure: true,
+        port: 587, //true for 465, false for other ports
+        secure: false,
         auth: {
-            user: config.mail.username,
-            pass: config.mail.password
+            user: 'christian33@ethereal.email', //config.mail.username,
+            pass: 'b2tuFSEhTkAVpHgjHH' //config.mail.password
         }
     });
 
@@ -35,7 +37,7 @@ export const sendMail = (mailOptions: IMailOptions) => {
             partialsDir: 'public/partials/',
         };
         const hbsOptions = {
-            viewEngine: handlebars.create(viewEngine),
+            viewEngine: create(viewEngine),
             viewPath: 'public/mail_templates',
         };
         transporter.use('compile', hbs(hbsOptions));

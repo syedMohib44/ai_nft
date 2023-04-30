@@ -25,12 +25,6 @@ export class App {
         this.app = express();
         this.config();
         this.routes();
-        // if (!IS_DEV_MODE) {
-        //     this.app.use(express.static(path.join(__dirname, '../../client/build')));
-        //     this.app.use('*', (req, res, next) => {
-        //         res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
-        //     });
-        // }
         this.errorHandler();
     }
 

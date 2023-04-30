@@ -50,6 +50,9 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
         message: 'Invalid Username or Password'
     });
 
+    if (!user.isActive)
+        throw new APIError(400, { message: 'Email is not verified' });
+
     const isValid = await isValidate(addAuthenticationDto.password, user.password);
     if (!isValid) throw new APIError(401, {
         message: 'Invalid Username or Password'
