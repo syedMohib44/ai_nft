@@ -2,7 +2,6 @@
   "name": "ai-nft",
   "version": "1.0.0",
   "description": "AI generated NFTs using stable diffusion.",
-  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "nodemon -e js,json,ts --exec ts-node-dev app.ts",
     "build": "rm -rf build && tsc",
