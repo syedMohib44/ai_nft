@@ -32,7 +32,7 @@ export const insertUser = async (addUserDto: AddUserDto) => {
     // }
     const hashedPassword = await bcrypt.hash(addUserDto.password, bcrypt.genSaltSync(10));
     const user = new Users();
-    user.address = addUserDto.address;
+    user.address = addUserDto.address.toLowerCase();
     user.firstName = addUserDto.firstName;
     user.lastName = addUserDto.lastName;
     user.username = addUserDto.username;

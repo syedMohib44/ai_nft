@@ -36,6 +36,7 @@ passport.use(new GoogleStrategy(googleOptions, async (accessToken: any, refreshT
 
         const existingEmailUser = await Users.findOne({ username: profile._json.email })
         if (existingEmailUser) {
+            return done(null, existingEmailUser);
             // console.log(existingEmailUser)
             // req.flash("errors", { msg: "There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings." });
         } else {
