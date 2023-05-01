@@ -51,16 +51,25 @@ export const isUser = (req: Request, res: Response, next: NextFunction) => {
 
 
 export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
-    return passport.authenticate('google', {
+    console.log(' ****** +++++++++ ****** ');
+
+    const d = passport.authenticate('google', {
         scope: [
             'email',
             'profile'
         ]
     })(req, res, next);
+    console.log(req.res?.getHeader('location'))
+    const red: string = req.res?.getHeader('location')?.toString() as string;
+    console.log(red)
+    res.redirect(red);
+    return d;
 };
 
 
 export const googleAuthCallBack = (req: Request, res: Response, next: NextFunction) => {
+    //{ successRedirect: 'http://localhost:3000', failureRedirect: 'http://localhost:3000/login' },
+    console.log(' =========== ****** ========== ');
     return passport.authenticate('google', async (err: any, profile: any) => {
         if (profile) {
             const payload = await preProcessingGO(profile.username, 'google');

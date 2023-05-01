@@ -29,20 +29,22 @@ export class App {
     }
 
     private config(): void {
-        this.app.set('port', PORT || 3000);
+        this.app.set('port', PORT || 3001);
         this.app.use(morgan('combined'));
-        this.app.use(cors());
+        // this.app.use(cors());
         this.app.use(passport.initialize());
         // Alternate of using cors
-        //     this.app.use((req, res, next) => {
-        //         res.header("Access-Control-Allow-Origin", "*");
-        //         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        //         if (req.method === 'OPTIONS') {
-        //             res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
-        //             return res.status(200).json({});
-        //         }
-        //         next();
-        //    });
+        this.app.use((req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("followAllRedirects", "true");
+            res.header("followOriginalHttpMethod", "true");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            if (req.method === 'OPTIONS') {
+                res.header("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
+                return res.status(200).json({});
+            }
+            next();
+        });
 
         this.app.use(express.static(path.join(__dirname, '../../public')));
         this.app.use(bodyParser.json({ limit: '5mb' }));
