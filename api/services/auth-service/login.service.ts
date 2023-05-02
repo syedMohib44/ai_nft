@@ -46,7 +46,7 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
     const user = await Users
         .findOne({ address: addAuthenticationDto.address });
 
-    if (!user) throw new APIError(401, {
+    if (!user || !user.password) throw new APIError(401, {
         message: 'Invalid Username or Password'
     });
 
@@ -70,15 +70,14 @@ async function preProcessing(addAuthenticationDto: AddAuthenticationDto) {
     const token = jwt.sign(payload, config.jwt_secret as string, { expiresIn: config.jwt_life });
     const refreshToken = jwt.sign(payload, config.refresh_jwt_secret as string, { expiresIn: config.refresh_jwt_life });
     user.lastLogin = moment.utc().format();
-    user.token = { accessToken: '', refreshToken: refreshToken, kind: 'ai-nft' };
+    user.token = { accessToken: '', refreshToken: refreshToken, kind: 'ainft' };
     await user.save();
 
     return { token, refreshToken };
 }
 
 
-export const preProcessingGO = async (username: string, payloadOf: AuthToken['kind']) => {
-    console.log('username = ', username, payloadOf);
+export const preProcessingGO = async (username: string, address: string, payloadOf: AuthToken['kind']) => {
     const user = await Users.findOne({
         username,
         'token.kind': payloadOf
@@ -91,8 +90,9 @@ export const preProcessingGO = async (username: string, payloadOf: AuthToken['ki
         userId: user._id,
         username: user.username,
         token: user.token.accessToken,
-        address: '0x00',
+        address: address,
         typeOfUser: 'user'
     };
-    return payload;
+    const token = jwt.sign(payload, config.jwt_secret as string, { expiresIn: config.jwt_life });
+    return token;
 };

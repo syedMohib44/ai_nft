@@ -49,11 +49,13 @@ export const isUser = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
+    console.log()
     return passport.authenticate('google', {
         scope: [
             'email',
             'profile'
-        ]
+        ],
+        state: req.query.address as string
     })(req, res, next);
 };
 
@@ -61,12 +63,16 @@ export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
 export const googleAuthCallBack = (req: Request, res: Response, next: NextFunction) => {
     //{ successRedirect: 'http://localhost:3000', failureRedirect: 'http://localhost:3000/login' },
     return passport.authenticate('google', async (err: any, profile: any) => {
+        console.log(profile)
         if (profile) {
-            const payload = await preProcessingGO(profile.username, 'google');
+            const payload = await preProcessingGO(profile.username, profile.address, 'google');
+            console.log(payload);
             try {
-                res.status(200).json({
-                    data: { payload }
-                });
+                // res.write({ data: payload });
+                res.redirect(`http://localhost:3000/?token=${payload}`);
+                // res.status(200).json({
+                //     data: { payload }
+                // });
             } catch (err) {
                 next(err);
             }
