@@ -12,7 +12,6 @@ export const ownerRegister = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-
 export const putVerifyEmail = async(req: Request, res: Response, next: NextFunction) =>{
     try {
         await verifyEmail(req.body.code);

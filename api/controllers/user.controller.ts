@@ -41,7 +41,7 @@ export const logout = async (req: IUserRequest, res: Response) => {
 //         await forgotEmail({
 //             phone: req.body.phone,
 //             googleCaptcha: req.body.g_recaptcha_response,
-//             ipAddress: req.ip
+//             ipaddress: req.ip
 //         });
 
 //         res.status(200).json({

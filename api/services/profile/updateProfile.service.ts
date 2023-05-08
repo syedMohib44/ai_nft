@@ -6,7 +6,6 @@ import { APIError } from "../../utils/error";
 
 
 const updateUser = async (user: IUsers, data: UpdateProfileDto) => {
-    user.phone = data.phone || user.phone;
     user.firstName = data.firstName || user.firstName;
     user.lastName = data.lastName || user.lastName;
 

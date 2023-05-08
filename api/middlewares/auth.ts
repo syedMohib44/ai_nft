@@ -63,13 +63,11 @@ export const googleAuth = (req: Request, res: Response, next: NextFunction) => {
 export const googleAuthCallBack = (req: Request, res: Response, next: NextFunction) => {
     //{ successRedirect: 'http://localhost:3000', failureRedirect: 'http://localhost:3000/login' },
     return passport.authenticate('google', async (err: any, profile: any) => {
-        console.log(profile)
         if (profile) {
             const payload = await preProcessingGO(profile.username, profile.address, 'google');
-            console.log(payload);
             try {
                 // res.write({ data: payload });
-                res.redirect(`http://localhost:3000/?token=${payload}`);
+                res.redirect(`${config.client_url.landing_url}/?token=${payload}`);
                 // res.status(200).json({
                 //     data: { payload }
                 // });
@@ -77,6 +75,9 @@ export const googleAuthCallBack = (req: Request, res: Response, next: NextFuncti
                 next(err);
             }
         }
-        else { res.sendStatus(401); }
+        else {
+            res.redirect(`${config.client_url.landing_url}/?error=INVALID_LOGIN`);
+            // res.sendStatus(401); 
+        }
     })(req, res, next);
 };

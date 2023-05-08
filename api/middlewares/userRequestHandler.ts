@@ -16,7 +16,7 @@ export const userRequestHandler = (handler: userRequestCallback) => {
                     message: 'Address is invalid',
                     error: 'invalid_send_to_address'
                 });
-                
+
             await handler(userReq, res, next); //assigning IUserRequest in handler and returning it to userRequestHandler.
         } catch (err) {
             console.log(err);
