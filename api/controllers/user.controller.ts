@@ -73,7 +73,6 @@ export const postForgotPassword = async (req: Request, res: Response, next: Next
 export const getUserExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const result = await findUserByAddress(req.params.address);
-        console.log(result);
         res.status(200).json({
             data: result
         });

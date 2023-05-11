@@ -30,12 +30,12 @@ const googleOptions: passportGoogle.StrategyOptionsWithRequest = {
 
 passport.use(new GoogleStrategy(googleOptions, async (req: any, accessToken: string, refreshToken: string, profile: any, done: any) => {
     try {
-        const existingUser = await Users.findOne({ google: profile.id });
+        const existingUser = await Users.findOne({ address: req.query.state, google: profile.id });
+
         if (existingUser)
             return done(null, existingUser);
 
         const existingEmailUser = await Users.findOne({ $or: [{ username: profile._json.email }, { address: req.query.state }] });
-        console.log(existingEmailUser, req.query.state);
         if (existingEmailUser) {
             return done(null, null);
         } else {
