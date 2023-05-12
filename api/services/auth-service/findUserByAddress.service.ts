@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import AuthVerification from "../../entity/AuthVerification";
 import Users from "../../entity/Users"
 import { APIError } from "../../utils/error";
 
@@ -17,10 +18,18 @@ export const findUserByAddress = async (address: string) => {
     const user = await Users.findOne({ address });
     if (!user)
         throw new APIError(404, { message: 'User cannot be found' });
-    if (user.google)
-        return REGISTER_STATUS.INACTIVE_UNREGISTERED;
-    else if (!user.isActive)
-        return REGISTER_STATUS.INACTIVE_REGISTERED
 
-    return REGISTER_STATUS.ACTIVE_REGISTERED
+    const verification = await AuthVerification.findOne({ user: user._id });
+    let expiry = null;
+
+    if (verification)
+        expiry = verification.expiryDate;
+
+    let status: REGISTER_STATUS = REGISTER_STATUS.ACTIVE_REGISTERED;
+    if (user.google)
+        status = REGISTER_STATUS.INACTIVE_UNREGISTERED;
+    else if (!user.isActive)
+        status = REGISTER_STATUS.INACTIVE_REGISTERED;
+
+    return { status, expiry };
 }
