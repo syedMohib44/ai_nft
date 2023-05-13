@@ -65,6 +65,8 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
     const apiKey = `Basic ${Buffer.from(`${config.infura_ipfs.api_key}:${config.infura_ipfs.api_secret}`).toString("base64")}`;
     const cid = await ipfs_uploader.uploadToIPFS(buffer, apiKey);
 
+
+
     // const { create } = await import('ipfs-core')
     // const gateway = 'https://ipfs.io/ipfs/'
     // const ipfs = await create();
@@ -77,14 +79,23 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
     const nonce1 = Math.floor(Math.random() * 429496729);
     const nonce2 = Math.floor(Math.random() * 429496729);
 
-    const hashed = await aiNFT.methods.getMessageHash(addNFTsDto.address, nonce1, nonce2, generatedImage.name, generatedImage.description, cid).call();
+
+    // address _sender,
+    // uint256 nonce1,
+    // uint256 nonce2,
+    // string memory _name,
+    // string memory _description,
+    // string memory _wish,
+    // string memory _hash
+    const hashed = await aiNFT.methods.getMessageHash(addNFTsDto.address, nonce1, nonce2, generatedImage.name, generatedImage.description, generatedImage.wish, cid).call();
     const token = await aiNFT.methods.getVerifySignature(addNFTsDto.address, hashed).call();
     const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545/'));
     await unlockAccount(web3);
     const { r, s, v } = await singMessage(web3, token);
 
     return {
-        "hash": addNFTsDto.hash,
+        "hash": cid,
+        "wish": generatedImage.wish,
         "description": generatedImage.description,
         "name": generatedImage.name,
         "nonce1": nonce1,
