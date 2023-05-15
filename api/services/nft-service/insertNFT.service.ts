@@ -65,20 +65,9 @@ export const insertNFTs = async (addNFTsDto: AddNFTsDto) => {
     const apiKey = `Basic ${Buffer.from(`${config.infura_ipfs.api_key}:${config.infura_ipfs.api_secret}`).toString("base64")}`;
     const cid = await ipfs_uploader.uploadToIPFS(buffer, apiKey);
 
-
-
-    // const { create } = await import('ipfs-core')
-    // const gateway = 'https://ipfs.io/ipfs/'
-    // const ipfs = await create();
-    // const buffer = fs.readFileSync(`${generatedImage.tag}.png`);
-    // const ipfsHash = await ipfs.add(buffer)
-    // console.log(ipfsHash.cid , ' ==== ', ipfsHash.path)
-
-
     const aiNFT = await w3.getAiNftDistroContract();
     const nonce1 = Math.floor(Math.random() * 429496729);
     const nonce2 = Math.floor(Math.random() * 429496729);
-
 
     // address _sender,
     // uint256 nonce1,

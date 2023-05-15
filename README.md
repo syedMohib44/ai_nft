@@ -33,3 +33,7 @@
 
 # README ANNOTATION
 - https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+
+
+# CLASS DIAGRAM
+![alt text](https://github.com/syedMohib44/ai_nft/AI-NFT.jpg)
