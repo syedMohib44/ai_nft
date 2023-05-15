@@ -36,4 +36,4 @@
 
 
 # CLASS DIAGRAM
-![alt text](https://github.com/syedMohib44/ai_nft/AI-NFT.jpg)
+![alt text](https://github.com/syedMohib44/ai_nft/blob/master/AI-NFT.jpg)
