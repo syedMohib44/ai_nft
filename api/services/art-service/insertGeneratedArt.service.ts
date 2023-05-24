@@ -14,13 +14,13 @@ const generate = async (config: Config, options?: Options) => {
     const hgInterface = new HfInference(config.ref);
     const parameters = {};
     if (config.width)
-        Object.assign(parameters, { width: +config.width })
+        Object.assign(parameters, { width: +config.width });
     if (config.height)
-        Object.assign(parameters, { height: +config.height })
+        Object.assign(parameters, { height: +config.height });
     if (config.guidance_scale)
-        Object.assign(parameters, { guidance_scale: +config.guidance_scale })
+        Object.assign(parameters, { guidance_scale: +config.guidance_scale });
     if (config.num_inference_steps)
-        Object.assign(parameters, { num_inference_steps: +config.num_inference_steps })
+        Object.assign(parameters, { num_inference_steps: +config.num_inference_steps });
 
     console.log('running', parameters);
 

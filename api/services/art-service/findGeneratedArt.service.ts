@@ -13,7 +13,9 @@ export const findAllArts = async (options: FindArt_OptionPaginate) => {
     const query = {};
     if (options.userId)
         Object.assign(query, { user: options.userId });
-
+    if (options.address)
+        Object.assign(query, { user: options.address });
+    console.log(options)
     if (options.q) {
         const usersCount = await GeneratedArts.countDocuments({ $text: { $search: options.q } });
         if (usersCount !== 0) { // non-partial matched

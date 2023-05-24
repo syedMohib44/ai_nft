@@ -1,16 +1,17 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AddNFTsDto } from '../dto/nfts/addNFTsDto';
 import { IUserRequest } from '../interface/IUserRequest';
 import { findAllNFTs, findAllNFT_ById, FindNFT_OptionPaginate } from '../services/nft-service/findNFTs.service';
 import { insertNFTs } from '../services/nft-service/insertNFT.service';
 
 
-export const getNFTs = async (req: IUserRequest, res: Response, next: NextFunction) => {
+export const getNFTs = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const options: FindNFT_OptionPaginate = {
             select: req.query.select,
             page: req.query.page ? +req.query.page : 1,
-            userId: req.user.userId,
+            userId: req.query.userId,
+            address: req.query.address ? req.query.address.toString() : undefined,
             limit: req.query.limit ? +req.query.limit : 10,
             sort: req.query.sort,
             q: req.query.q as string,

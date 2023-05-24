@@ -18,6 +18,8 @@ export const changePassword = async ({
     if (!user) {
         throw new APIError(400, { message: 'User does not exist' });
     }
+    if (user.google)
+        throw new APIError(400, { message: 'User already registerd with google' })
 
     const isPasswordEqual = bcryptjs.compareSync(currentPassword, user.password as string);
     if (!isPasswordEqual) {

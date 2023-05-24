@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AddArtDto } from '../dto/art/addArtDto';
 import { RemoveArtDto } from '../dto/art/removeArtDto';
 import { UpdateArtDto } from '../dto/art/updateArtDto';
@@ -11,17 +11,18 @@ import { removeAllArtByUser, removeGeneratedArt } from '../services/art-service/
 import { updateGeneratedArt } from '../services/art-service/updateGenerateArt.service';
 
 
-export const getArts = async (req: IUserRequest, res: Response, next: NextFunction) => {
+export const getArts = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const options: FindArt_OptionPaginate = {
             select: req.query.select,
             page: req.query.page ? +req.query.page : 1,
-            userId: req.user.userId,
-            address: req.user.address,
+            userId: req.query.userId ? req.query.userId.toString() : undefined,
+            address: req.query.address ? req.query.address.toString() : undefined,
             limit: req.query.limit ? +req.query.limit : 10,
             sort: req.query.sort,
             q: req.query.q as string
         }
+        console.log(options, ' === ');
         const result = await findAllArts(options);
         res.status(200).json({ status: 'success', result });
     } catch (err) {

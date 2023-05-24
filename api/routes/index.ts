@@ -1,8 +1,9 @@
-import { Router,Request, Response } from 'express';
+import { Router } from 'express';
 import { auth, superadminAuth, isSuperadmin, googleAuth, googleAuthCallBack } from '../middlewares/auth';
-import { userRequestHandler } from '../middlewares/userRequestHandler';
+import { nftRoutes } from './nft.route';
+import { artRoutes } from './art.route';
 import multer from 'multer';
-import { authRoutes } from './authRoutes';
+import { authRoutes } from './auth.route';
 import { userRoutes } from './user';
 import { superadminRoutes } from './superadmin';
 import passport from 'passport';
@@ -19,6 +20,9 @@ router.get('/google-auth', googleAuth);
 
 // router.get('/google-auth/callback', passport.authenticate('google', {session: false}), googleAuthCallBack);
 router.get('/google-auth/callback', googleAuthCallBack);
+
+router.use('/nft', nftRoutes);
+router.use('/generate-art', artRoutes);
 
 router.use('/user', auth(), userRoutes);
 
