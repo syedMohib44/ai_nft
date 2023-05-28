@@ -22,7 +22,7 @@ router.get('/google-auth', googleAuth);
 router.get('/google-auth/callback', googleAuthCallBack);
 
 router.use('/nft', nftRoutes);
-router.use('/generate-art', artRoutes);
+router.use('/art', artRoutes);
 
 router.use('/user', auth(), userRoutes);
 

@@ -8,7 +8,6 @@ import { APIError } from "../../utils/error";
 import crypto from 'crypto';
 import { config } from "../../config";
 const ipfs_uploader = require('../../utils/ipfs-uploader.cjs')
-// import uploadToIPFS from 'ipfs-uploader';
 
 const generate = async (config: Config, options?: Options) => {
     const hgInterface = new HfInference(config.ref);
