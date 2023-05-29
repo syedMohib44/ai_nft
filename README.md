@@ -12,7 +12,7 @@
 ## ELSE
 - Open two CLI or Git Bash, one in the project folder `ai-nft`.
 - Run `npm start` in the terminals.
-- Server will start at port `3000`
+- Server will start at port `3001`
 
 
 # BUILD PROJECT
