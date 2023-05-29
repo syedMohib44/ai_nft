@@ -7,6 +7,9 @@
 - Run command "npm install"
 
 # RUN PROJECT
+## IF DOCKER
+- docker-compose up
+## ELSE
 - Open two CLI or Git Bash, one in the project folder `ai-nft`.
 - Run `npm start` in the terminals.
 - Server will start at port `3000`
