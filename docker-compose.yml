@@ -1,0 +1,73 @@
+services:
+  api:
+    build: ./
+    working_dir: /usr/app
+    restart: always
+    environment: 
+      MODE: prod
+      BASE_URL: http://localhost:3001
+      LANDING_URL: http://localhost:3000
+      OWNER_URL: https://localhost:4200
+      ECOMMERCE_URL: https://localhost:4200
+
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_URI_TEST: mongodb://mongodb:27017
+      SALT_SECRET: D&I$NT50mdrp9!!^fgXKg
+      PORT: 3001
+
+      JWT_SECRET: ashdfjhasdlkjfhalksdjhflak
+      JWT_LIFE: 3hrs
+      REFRESH_JWT_SECRET: ashdbngasdlkjfcalkhhjhflak
+      REFRESH_JWT_LIFE: 365d
+
+      FILE_SERVER_URL: https://xyz.com/
+      FILE_SERVER_HOST: XX.XXXX.XX.XX
+      FILE_SERVER_PORT: XXX
+      FILE_SERVER_USERNAME: test
+      FILE_SERVER_PASSWORD: test
+      FILE_SERVER_ROOT_FILE_PATH: /xyz/abc/www/
+
+      MAIL_HOST: smtp.ethereal.email
+      MAIL_USERNAME: smohib945@gmail.com
+      MAIL_PASSWORD: 12345
+      BCC: smohib945@gmail.com,smohib945@gmail.com
+
+      GOOGLE_CAPTCHA_SECRET: 123xxxxxxxxxxxxxxxxxxxxxx
+      GOOGLE_CLIENT_ID: 657822342308-tg90vvv0n7l7mkm3be4d1j78ecleeh5e.apps.googleusercontent.com
+      GOOGLE_CLIENT_SECRET: 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
+
+      TWILIO_ACCOUNT_SID: XXXXXXXXXXXXXXXXXXXXXXXX
+      TWILIO_AUTH_TOKEN: xxxxxxxxxxxxxxxxxx
+      TWILIO_PHONE: +19999988999
+      TWILIO_SITE_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+      AI_NFT: 0x8d8bc376f7da9cd09a17c0d1e6e3a59c997ac5fb
+      AI_NFT_DISTRO: 0xe6b3EC1823b2f4DD81D2878fdF9102D1fe17fAe4
+
+      OWNER_ADDRESS: 0xd00faF7c2a837DC457389758Ea1271aE6256dc44
+      OWNER_PASSPHRASE: thumb must observe capital mandate december distance camp near minute sudden distance
+      OWNER_PASSWORD: Pronfsu2@
+
+      API_KEY: 2P41WIjfIg7rnrTpwvN2jaJPT2f
+      API_SECRET: fda9c5a9aeb83696a7a7a128d13b25be
+
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./:/usr/app
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      SALT_SECRET: D&I$NT50mdrp9!!^fgXKg
+      PORT: 3001
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      
