@@ -36,12 +36,12 @@ export const findAllArts = async (options: FindArt_OptionPaginate) => {
         }
     }
 
-    const arts = await GeneratedArts.paginate(query, { ...options, populate: { path: 'user', select: 'firstName lastName isActive' } });
+    const arts = await GeneratedArts.paginate(query, { ...options, populate: { path: 'user', select: 'address firstName lastName isActive' } });
     return arts;
 }
 
 export const findAllArtsById = async (_id: number) => {
-    const nfts = await GeneratedArts.findOne({ _id }).populate({ path: 'users', select: 'firstName lastName isActive ' })
+    const nfts = await GeneratedArts.findOne({ _id }).populate({ path: 'users', select: 'address firstName lastName isActive ' })
     if (!nfts)
         throw new APIError(404, { message: "Art cannot be found" });
     return nfts;

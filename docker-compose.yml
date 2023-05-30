@@ -1,66 +1,67 @@
 services:
   api:
     build: ./
+    image: node:alpine
+    command: sh -c "npm install && npm start"
     working_dir: /usr/app
     restart: always
     environment: 
-      MODE: prod
-      BASE_URL: http://localhost:3001
-      LANDING_URL: http://localhost:3000
-      OWNER_URL: https://localhost:4200
-      ECOMMERCE_URL: https://localhost:4200
-
-      MONGO_URI: mongodb://mongodb:27017
-      MONGO_URI_TEST: mongodb://mongodb:27017
-      SALT_SECRET: D&I$NT50mdrp9!!^fgXKg
-      PORT: 3001
-
-      JWT_SECRET: ashdfjhasdlkjfhalksdjhflak
-      JWT_LIFE: 3hrs
-      REFRESH_JWT_SECRET: ashdbngasdlkjfcalkhhjhflak
-      REFRESH_JWT_LIFE: 365d
-
-      FILE_SERVER_URL: https://xyz.com/
-      FILE_SERVER_HOST: XX.XXXX.XX.XX
-      FILE_SERVER_PORT: XXX
-      FILE_SERVER_USERNAME: test
-      FILE_SERVER_PASSWORD: test
-      FILE_SERVER_ROOT_FILE_PATH: /xyz/abc/www/
-
-      MAIL_HOST: smtp.ethereal.email
-      MAIL_USERNAME: smohib945@gmail.com
-      MAIL_PASSWORD: 12345
-      BCC: smohib945@gmail.com,smohib945@gmail.com
-
-      GOOGLE_CAPTCHA_SECRET: 123xxxxxxxxxxxxxxxxxxxxxx
-      GOOGLE_CLIENT_ID: 657822342308-tg90vvv0n7l7mkm3be4d1j78ecleeh5e.apps.googleusercontent.com
-      GOOGLE_CLIENT_SECRET: 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
-
-      TWILIO_ACCOUNT_SID: XXXXXXXXXXXXXXXXXXXXXXXX
-      TWILIO_AUTH_TOKEN: xxxxxxxxxxxxxxxxxx
-      TWILIO_PHONE: +19999988999
-      TWILIO_SITE_KEY: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-      AI_NFT: 0x8d8bc376f7da9cd09a17c0d1e6e3a59c997ac5fb
-      AI_NFT_DISTRO: 0xe6b3EC1823b2f4DD81D2878fdF9102D1fe17fAe4
-
-      OWNER_ADDRESS: 0xd00faF7c2a837DC457389758Ea1271aE6256dc44
-      OWNER_PASSPHRASE: thumb must observe capital mandate december distance camp near minute sudden distance
-      OWNER_PASSWORD: Pronfsu2@
-
-      API_KEY: 2P41WIjfIg7rnrTpwvN2jaJPT2f
-      API_SECRET: fda9c5a9aeb83696a7a7a128d13b25be
-
+      MODE: ${MODE}
+      BASE_URL: ${BASE_URL}
+      LANDING_URL: ${LANDING_URL}
+      OWNER_URL: ${OWNER_URL}
+      ECOMMERCE_URL: ${ECOMMERCE_URL}
+ 
+      MONGO_URI: ${MONGO_URI}
+      MONGO_URI_TEST: ${MONGO_URI_TEST}
+      SALT_SECRET: ${SALT_SECRET}
+      PORT: ${PORT}
+ 
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_LIFE: ${JWT_LIFE}
+      REFRESH_JWT_SECRET: ${REFRESH_JWT_SECRET}
+      REFRESH_JWT_LIFE: ${REFRESH_JWT_LIFE}
+ 
+      FILE_SERVER_URL: ${FILE_SERVER_URL}
+      FILE_SERVER_HOST: ${FILE_SERVER_HOST}
+      FILE_SERVER_PORT: ${FILE_SERVER_PORT}
+      FILE_SERVER_USERNAME: ${FILE_SERVER_USERNAME}
+      FILE_SERVER_PASSWORD: ${FILE_SERVER_PASSWORD}
+      FILE_SERVER_ROOT_FILE_PATH: ${FILE_SERVER_ROOT_FILE_PATH}
+ 
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      BCC: ${BCC}
+ 
+      GOOGLE_CAPTCHA_SECRET: ${GOOGLE_CAPTCHA_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+ 
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_PHONE: ${TWILIO_PHONE}
+      TWILIO_SITE_KEY: ${TWILIO_SITE_KEY}
+ 
+      AI_NFT: ${AI_NFT}
+      AI_NFT_DISTRO: ${AI_NFT_DISTRO}
+ 
+      OWNER_ADDRESS: ${OWNER_ADDRESS}
+      OWNER_PASSPHRASE: ${OWNER_PASSPHRASE}
+      OWNER_PASSWORD: ${OWNER_PASSWORD}
+ 
+      API_KEY: ${API_KEY}
+      API_SECRET: ${API_SECRET}
+      
     ports:
-      - "3001:3001"
+      - "${PORT}:${PORT}"
     volumes:
       - ./:/usr/app
     depends_on:
       - mongodb
     environment:
-      MONGO_URI: mongodb://mongodb:27017
-      SALT_SECRET: D&I$NT50mdrp9!!^fgXKg
-      PORT: 3001
+      MONGO_URI: ${MONGO_URI}
+      PORT: ${PORT}
 
   mongodb:
     image: mongo
@@ -69,5 +70,5 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_URI: mongodb://mongodb:27017
+      MONGO_URI: ${MONGO_URI}
       

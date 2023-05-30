@@ -5,3 +5,8 @@ export interface RemoveArtDto {
     address: string;
     tag: string;
 }
+
+export interface RemoveAllArtDto {
+    user: IUsers['_id'];
+    address: string;
+}

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AddArtDto } from '../dto/art/addArtDto';
-import { RemoveArtDto } from '../dto/art/removeArtDto';
+import { RemoveAllArtDto, RemoveArtDto } from '../dto/art/removeArtDto';
 import { UpdateArtDto } from '../dto/art/updateArtDto';
 import { Config } from '../interface/IHGConfig';
 import { Options } from '../interface/IHGOptions';
@@ -83,6 +83,7 @@ export const putArt = async (req: IUserRequest, res: Response, next: NextFunctio
             name: req.body.name
         };
         await updateGeneratedArt(updateArtDto);
+        res.status(200).json({ status: 'success' });
     } catch (err) {
         next(err);
     }
@@ -106,10 +107,9 @@ export const deleteART = async (req: IUserRequest, res: Response, next: NextFunc
 
 export const deleteAllART = async (req: IUserRequest, res: Response, next: NextFunction) => {
     try {
-        const removeArtDto: RemoveArtDto = {
+        const removeArtDto: RemoveAllArtDto = {
             user: req.user.userId,
-            address: req.user.address,
-            tag: req.body.tag
+            address: req.user.address
         };
         await removeAllArtByUser(removeArtDto);
         res.status(200).json({ status: 'success' });
