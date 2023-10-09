@@ -55,6 +55,8 @@ services:
       
     ports:
       - "${PORT}:${PORT}"
+    expose: 
+      - "${PORT}"
     volumes:
       - ./:/usr/app
     depends_on:

@@ -32,8 +32,14 @@ passport.use(new GoogleStrategy(googleOptions, async (req: any, accessToken: str
     try {
         const existingUser = await Users.findOne({ address: req.query.state, google: profile.id });
 
-        if (existingUser)
+        if (existingUser) {
+            existingUser.google = profile.id;
+            existingUser.lastName = profile.name.familyName;
+            existingUser.token = { kind: 'google', accessToken, refreshToken };
+            existingUser.profilePic = profile._json.picture;
+            await existingUser.save();
             return done(null, existingUser);
+        }
 
         const existingEmailUser = await Users.findOne({ $or: [{ username: profile._json.email }, { address: req.query.state }] });
         if (existingEmailUser) {

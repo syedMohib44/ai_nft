@@ -17,7 +17,6 @@ router.use('/superadmin', superadminAuth(), isSuperadmin, superadminRoutes);
 
 router.use('/auth', authRoutes);
 router.get('/google-auth', googleAuth);
-
 // router.get('/google-auth/callback', passport.authenticate('google', {session: false}), googleAuthCallBack);
 router.get('/google-auth/callback', googleAuthCallBack);
 

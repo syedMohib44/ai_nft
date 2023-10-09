@@ -19,7 +19,7 @@ router.post('/reset-password', postVerifyForgotPassword);
 
 router.get('/:address', getUserExists);
 
-router.post('/logout', userRequestHandler(logout));
+// router.post('/logout', userRequestHandler(logout));
 router.post('/register', multer({
     storage: storage,
     limits: {
